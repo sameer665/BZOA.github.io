@@ -1,0 +1,15 @@
+<!-- <nz-sider nzWidth="240px;height:100%" nzTheme="light" [(nzCollapsed)]="isCollapsed"> -->
+<ul nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+        <ng-container *ngFor="let menu of menus">
+          <li nz-submenu [nzOpen]="menu.open"   *ngIf="menu.children.length">
+            <span title><i nz-icon [type]="menu.icon"></i><span class="nav-text">{{menu.text}}</span></span>
+            <ul>
+              <li nz-menu-item    [nzSelected]="[children.selected]"  *ngFor="let children of menu.children" [routerLink]="[children.link]">{{children.text}}</li>
+            </ul> 
+          </li>
+          <li nz-menu-item  *ngIf="menu.children.length === 0" [routerLink]="[menu.link]">
+            <span title><i nz-icon [type]="menu.icon"></i><span class="nav-text">{{menu.text}}</span></span>
+          </li>
+        </ng-container>
+      </ul>
+    <!-- </nz-sider> -->

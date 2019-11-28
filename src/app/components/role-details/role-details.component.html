@@ -1,0 +1,105 @@
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+    <nz-tab nzTitle="角色列表">
+            <!-- <nz-card>
+                    <form nz-form [nzLayout]="'inline'" [formGroup]="validateFormList">
+                    <nz-form-item>
+                                    <nz-form-control>
+                                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                    <input formControlName="roleName" nz-input placeholder="Search Role Name..."
+                                                    [(ngModel)]="roleName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchRoleName($event)" />
+                                                    </nz-input-group>
+                                                    <ng-template #suffixIcon>
+                                                                    <i nz-icon nzType="search"></i>
+                                                  </ng-template>
+                                                    <nz-autocomplete #auto>
+                                                             
+                                                   </nz-autocomplete>
+                                            </nz-form-control>
+                    </nz-form-item>
+                    </form>
+                    </nz-card> -->
+                    <!-- List -->
+                    <div nz-row nzType="flex" nzJustify="start">
+                    <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                        <nz-card>
+                                <nz-table #ajaxTable nzShowQuickJumper [nzData]="roleList" class="table-list"
+                                [nzFrontPagination]="true" [nzTotal]="total"
+                                [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                (nzPageIndexChange)="getRoleDetailList()"
+                                (nzPageSizeChange)="getRoleDetailList()">
+                                <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                        <tr>
+                                        <th nzShowSort nzSortKey="userNo"
+                                        class="white_nowrap">
+                                        <span>Role Name</span></th>
+                                        <th nzShowSort nzSortKey="userNo"
+                                        class="white_nowrap">
+                                        <span>English Name</span></th>
+                                        <th nzShowSort nzSortKey="userNo"
+                                        class="white_nowrap">
+                                        <span>Role Type</span></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                                <td>
+                                                                {{item.name}}
+                                                </td>
+                                                <td>
+                                                        {{item.ename}}
+                                                  </td>
+                                                  <td>
+                                                {{item.roleType}}
+                                                </td>
+                                                </tr>
+                                                </tbody>
+                                </nz-table>
+                        </nz-card>
+                    </div>
+                    </div>
+    </nz-tab>    
+    <nz-tab nzTitle="角色添加">
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                    <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleName">Role Name</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Name!">
+                                    <input nz-input nzAllowClear class="inputBaseAmount" formControlName="roleName"  [(ngModel)]="roleName"   placeholder="Role Name">
+                            </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleEngName">English Name</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Eng Name!">
+                                    <input nz-input nzAllowClear class="inputBaseAmount" formControlName="roleEngName"  [(ngModel)]="roleEngName"   placeholder="Eng  Name">
+                            </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="active">Role Type</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Role Type">
+                            <nz-select  class="inputBaseAmount"
+                                                nzShowSearch
+                                                nzAllowClear
+                                                formControlName="roleType"
+                                                [(ngModel)]="roleType">
+                                                <nz-option nzLabel="ADMIN" nzValue="ADMIN"></nz-option>
+                                                <nz-option nzLabel="DEPT" nzValue="DEPT"></nz-option>
+                                            <nz-option nzLabel="HR" nzValue="HR"></nz-option>
+                                            <nz-option nzLabel="FINANCE" nzValue="FINANCE"></nz-option>
+                                            <nz-option nzLabel="USER" nzValue="USER"></nz-option>
+                                            </nz-select>
+                                            </nz-form-control>
+                          </nz-form-item>
+                          <nz-form-item>
+                                <nz-form-label [nzSpan]="6">Remarks</nz-form-label>
+                                <nz-form-control [nzSpan]="12">
+                                  <textarea formControlName="remarks" [(ngModel)]="remarks" class="inputBaseAmount" nz-input rows="2" placeholder="write any thing"></textarea>
+                                </nz-form-control>
+                              </nz-form-item>
+                              <nz-form-item>
+                                <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                                  <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+                                  <button nz-button (click)="resetForm($event)">Reset</button>
+                                </nz-form-control>
+                              </nz-form-item>
+            </form>
+    </nz-tab>
+</nz-tabset>

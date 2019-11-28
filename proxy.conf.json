@@ -1,0 +1,30 @@
+{
+	"/hrAdmin":{   
+		"target": "http://localhost:8081",   
+		"secure":false,
+		"changeOrigin": true
+		
+	},
+	"/authentication": {
+		"target": "http://101.132.32.7:8081",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/signOut": {
+
+		"target": "http://101.132.32.7:8081",
+
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/rdt": {
+
+		"target": "http://101.132.32.7:8081",
+
+		"secure": false,
+		"changeOrigin": true
+	}
+}
+
+
+

@@ -1,0 +1,28 @@
+:host::ng-deep.ant-table-tbody >tr:nth-child(odd){
+  background-color:#f9f9f9 !important;
+  
+}
+:host::ng-deep.ant-table-tbody >tr:nth-child(even){
+  background-color: #ffffff;
+}
+  .view-Img{
+    text-align: center;
+  }
+  ::ng-deep.ant-modal-footer{
+    display: none;
+  }
+  ::ng-deep.ant-modal-body {
+    height: 350px;
+    max-height: 600px;
+}
+::ng-deep.ant-modal-header{
+  background: #1890ff;
+  color: #fff;
+  font-size: 18px;
+  padding-left: 30px;
+  line-height: 60px;
+  text-align: left;
+}
+::ng-deep.ant-modal-title{
+  color:#ffffff;
+}

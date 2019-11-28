@@ -1,0 +1,127 @@
+<nz-layout>
+<nz-content class="outer-content">
+                <nz-card>
+                        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                                <nz-form-item>
+                                        <nz-form-control>
+                                                <!-- <nz-month-picker placeholder="Start Date"  formControlName="employeeAttendanceDate" 
+                                                [(ngModel)]="employeeAttendanceDate"></nz-month-picker> -->
+                                                <nz-month-picker placeholder="Monthly Date" [nzDisabledDate]="disabledDate"  formControlName="finalRankingDate" 
+                                                [(ngModel)]="finalRankingDate"></nz-month-picker>
+                                                </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-control>
+                                                    <nz-input-number
+                                                    [(ngModel)]="ratioValue"
+                                                    [nzMin]="1"
+                                                    [nzMax]="100"
+                                                    [nzStep]="1"
+                                                    [nzFormatter]="formatterPercent"
+                                                    [nzParser]="parserPercent"
+                                                    class="inputBase input-margin"
+                                                    formControlName="ratioValue"
+                                                    placeholder="Ratio"
+                                                    (keyup)="getPlanValue($event)"
+                                                    (onblur)="getPlanValue($event)"
+                                                  ></nz-input-number>
+                                                  </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-control nzErrorTip="Please input your Cost Value!">
+                                                        <input nz-input nzAllowClear class="inputBase" formControlName="costValue"  [(ngModel)]="costValue" placeholder="cost"  (keyup)="getPlanIssuePoints($event)">
+                                                      </nz-form-control>
+                                            </nz-form-item>
+                                            <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Please input your Plan!">
+                                                    <input nz-input nzAllowClear class="inputBase align-plan" formControlName="planValue" [nzDisabled]="view"  [(ngModel)]="planValue" placeholder="plan">
+                                                          </nz-form-control>
+                                                </nz-form-item>
+                                                <nz-form-item>
+                                                        <nz-form-control nzErrorTip="Please input your Actual Points!">
+                                                                <input nz-input nzAllowClear class="inputBase input-margin" formControlName="actualPoints" [nzDisabled]="view"  [(ngModel)]="actualPoints" placeholder="Actual">
+                                                              </nz-form-control>
+                                                    </nz-form-item>
+
+                                                    <nz-form-item nz-row class="register-area">
+                                                            <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                                                                    <button nz-button nzType="primary" (click)="submitEmpFinalPoints()"  
+                                                                    [nzLoading]="isOperating"
+                                                                    [disabled]="!validateForm.valid">Save</button>
+                                                            </nz-form-control>
+                                                    </nz-form-item>
+                                            <nz-form-item nz-row class="register-area" >
+                                                    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                                                            <button nz-button  (click)="resetEmpFinalPoints()">Clear</button>
+                                                    </nz-form-control>
+                                                    </nz-form-item>
+                        </form>
+                    </nz-card>
+                              <!-- List -->
+                            <div nz-row nzType="flex" nzJustify="start">
+                                    <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                                            <nz-card class="bCard">
+                                                    <nz-table #ajaxTable nzShowQuickJumper [nzData]="empTotalFinalList" class="table-list"
+                                                    [nzFrontPagination]="true" [nzTotal]="total"
+                                                    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                                    (nzPageIndexChange)="getEmpFinalList()"
+                                                    (nzPageSizeChange)="getEmpFinalList()">
+                                                    <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                                            <tr>
+                                                                        <th nzShowSort nzSortKey="fundsMonth"
+                                                                        class="white_nowrap">
+                                                                        <span>Funds Month</span></th>
+                                                                        <th nzShowSort nzSortKey="costValue"
+                                                                            class="white_nowrap">
+                                                                            <span>Cost Value</span></th>
+                                                                        <th nzShowSort nzSortKey="issueRatio"
+                                                                            class="white_nowrap">
+                                                                            <span>Ratio %</span></th>
+                                                                        <th nzShowSort nzSortKey="planIssuePoints"
+                                                                            class="white_nowrap">
+                                                                            <span>Plan Issue</span></th>
+                                                                            
+                                                                        <th nzShowSort nzSortKey="actualIssuePoints"
+                                                                            class="white_nowrap">
+                                                                            <span>Actual Issue</span></th>
+                                                                        <th nzShowSort nzSortKey="integralPoints" 
+                                                                            class="white_nowrap">
+                                                                            <span>Integral Points</span></th>
+                                                                            <th nzShowSort nzSortKey="updateTime" 
+                                                                            class="white_nowrap"> 
+                                                                                Update Time
+                                                                            </th>    
+                                                                </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                                        <td>
+                                                            {{item.fundsMonth | date:'yyyy-MM'}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.costValue}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.issueRatio}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.planIssuePoints}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.actualIssuePoints}}
+                                                        </td>
+                                                        <td>
+                                                            {{item.integralPoints}}
+                                                        </td>
+                                                        <td>
+                                                                {{item.updateTime}}
+                                                                </td>
+                                                    </tr>
+                                                    </tbody>
+                                                    </nz-table>
+                                            </nz-card>
+                                    </div>
+                            </div>
+        </nz-content>
+        </nz-layout>
+        

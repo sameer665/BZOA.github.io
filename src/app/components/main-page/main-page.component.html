@@ -1,0 +1,18 @@
+<nz-layout class="layout">
+  <app-header (nzCollapsed)="launchSidebar()"></app-header>
+  <nz-layout>
+      <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="triggerTemplate">
+          <app-slider [isCollapsed]="isCollapsed"></app-slider>
+        </nz-sider>
+      <nz-layout [ngStyle]="{'margin-left':isCollapsed?'0px':'0px' }" class="layout-nz">
+          <nz-content style="background:#fff;">
+            <router-outlet>
+            </router-outlet>
+          </nz-content>
+          <nz-footer style="text-align: center;">
+              BZ HRMS ©2019 By
+            <a href="https://www.baidu.com/" target="_blank" style="outline: none;color: #565656">Link</a>
+          </nz-footer>
+        </nz-layout>
+    </nz-layout>
+</nz-layout>

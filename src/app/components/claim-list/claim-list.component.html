@@ -1,0 +1,180 @@
+
+                <nz-content class="outer-content">
+                        <nz-card>
+                                        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                                        <nz-form-item>
+                                                <nz-form-control>
+                                                        <nz-date-picker nzPlaceHolder="请选择月份" [nzDisabledDate]="disabledDate"  formControlName="claimDate" 
+                                                        [(ngModel)]="claimDate"   (ngModelChange)="onSearchClaimMonth($event)"></nz-date-picker>
+                                                        </nz-form-control>
+                                                </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-control>
+                                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                                <input formControlName="accountNO" nz-input placeholder="帐号..." 
+                                                                [(ngModel)]="accountNO"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchClaimAccountNo($event)"  />
+                                                                </nz-input-group>
+                                                                <ng-template #suffixIcon>
+                                                                <i nz-icon nzType="search"></i>
+                                                                </ng-template>
+                                                                <nz-autocomplete #auto>
+                                                                
+                                                                </nz-autocomplete>
+                                                        </nz-form-control>
+                                                </nz-form-item>
+                                                <nz-form-item>
+                                                        <nz-form-control>
+                                                                <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                                <input formControlName="bankName" nz-input placeholder="银行名称..."
+                                                                [(ngModel)]="bankName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchClaimBankName($event)" />
+                                                                </nz-input-group>
+                                                                </nz-form-control>
+                                                </nz-form-item>                                
+                                        </form>
+                                        </nz-card>
+                                        <!-- Claim List -->
+                                        <div nz-row nzType="flex" nzJustify="start">
+                                                <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                                                        <nz-card class="bCard">
+                                                                <nz-table #ajaxTable nzShowQuickJumper [nzData]="claimDetailsList" class="table-list"
+                                                                [nzFrontPagination]="true" [nzTotal]="total"
+                                                                [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize">
+                                                                <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                                                <tr>
+                                                                <th nzShowSort nzSortKey="userName"
+                                                                class="white_nowrap">
+                                                                <span>User Name</span></th>
+                                                                <th nzShowSort nzSortKey="claimDate"
+                                                                        class="white_nowrap">
+                                                                        <span>Apply Date</span></th>
+                                                                <th nzShowSort nzSortKey="companyName"
+                                                                class="white_nowrap">
+                                                                <span>Company Name</span></th>
+                                                                <th nzShowSort nzSortKey="bankName"
+                                                                class="white_nowrap">
+                                                                <span>Bank Name</span></th>
+                                                                <th nzShowSort nzSortKey="amount"
+                                                                        class="white_nowrap">
+                                                                        <span>Amount</span></th>
+                                                                <th nzShowSort nzSortKey="postGrade"
+                                                                class="white_nowrap">
+                                                                <span>Post Grade</span></th>
+                                                                <th nzShowSort nzSortKey="deduction"
+                                                                class="white_nowrap">
+                                                                <span>Deduction</span></th>
+                                                                <th nzShowSort nzSortKey="effectiveDate"
+                                                                class="white_nowrap">
+                                                                <span>Effective Month</span></th>
+                                                                <th nzShowSort nzSortKey="totalDeduction"
+                                                                class="white_nowrap">
+                                                                <span>Total Deduction</span></th>
+                                                                <th nzShowSort nzSortKey="invoiceUpload"
+                                                                class="white_nowrap">
+                                                                <span>Invoice Image</span></th>
+                                                                <th>Action</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                                                <td>
+                                                                        {{item.userName}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.claimDate | date:'yyyy-MM-dd'}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.companyName}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.bankName}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.amount}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.postGrade}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.deduction}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.effectiveDate | date:'yyyy-MM'}}
+                                                                </td>
+                                                                <td>
+                                                                        {{item.totalDeduction}}
+                                                                </td>
+                                                                <td>
+                                                                <!-- <img [src]="data:image/jpeg;base64,{{item.invoiceUpload}}" style="height:30px;width:30px" />  
+                                                                *ngIf="item.processInstanceId==null" 
+                                                                *ngIf="item.processInstanceId==null" 
+                                                                *ngIf="item.processInstanceId==null" -->
+                                                                <img src="{{item.invoiceUpload}}" (click)="getInoiceImageView(item.invoiceUpload)"  style="height:30px;width:30px;border-radius: 4px;" id="photo-id"/>
+                                                                </td>
+                                                                <td>
+                                                                        <div *ngIf="item.processInstanceId!=null && item.claimStatus==2">
+                                                                        <a (click)="viewClaimList(item.id)">View</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <nz-popconfirm [nzTitle]="'Sure to revoke?'" (nzOnConfirm)="revokeClaimList(item.id,item.processInstanceId)">
+                                                                                        <a nz-popconfirm >Revoke</a>
+                                                                        </nz-popconfirm> 
+                                                                        </div>
+                                                                        <div *ngIf="item.processInstanceId!=null && item.claimStatus==3 || item.claimStatus==5||  item.claimStatus==6">
+                                                                        <a (click)="viewClaimList(item.id)">View</a>
+                                                                                        <!-- <a (click)="updatedClaimList(item.id)">Edit</a>  
+                                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                                        <a (click)="viewClaimList(item.id)">View</a>
+                                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <a (click)="saveAndSubmitClaimList(item.id)">Submit</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteClaimList(item.id)">
+                                                                                        <a nz-popconfirm >Delete</a>
+                                                                                </nz-popconfirm>  -->
+                                
+                                                                        </div>
+                                                                        <div *ngIf="item.processInstanceId==null && item.claimStatus==1 && item.approveName==null">
+                                                                        <a (click)="updatedClaimList(item.id)">Edit</a>   
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <a (click)="viewClaimList(item.id)">View</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <a (click)="saveAndSubmitClaimList(item.id)">Submit</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteClaimList(item.id)">
+                                                                                        <a nz-popconfirm >Delete</a>
+                                                                                </nz-popconfirm> 
+                                                                        </div>
+                                                                        <div *ngIf="item.processInstanceId!=null && item.taskId!=null && item.claimStatus==4"> 
+                                                                        <a (click)="updatedClaimList(item.id)">Edit</a>   
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <a (click)="viewClaimList(item.id)">View</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <a (click)="saveAndSubmitClaimList(item.id)">Submit</a>
+                                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                                        <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteClaimList(item.id)">
+                                                                                        <a nz-popconfirm >Delete</a>
+                                                                        </nz-popconfirm> 
+
+                                                                        </div>
+                                                                        
+                                                                        <!-- <a (click)="claimAppealTaskList()" *ngIf="logined=='finance'">
+                                                                                Task
+                                                                        </a> -->
+                                                                </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                </nz-table>
+                                                        </nz-card>
+                                                </div>
+                                        </div>
+                                        <div *ngIf="isVisibleMiddle==true">
+                                                <nz-modal
+                                                nzWrapClassName="vertical-center-modal"
+                                                [(nzVisible)]="isVisibleMiddle"
+                                                nzTitle="Invoice Image"
+                                                (nzOnCancel)="handleCancelMiddle()"
+                                                >
+                                                <p class="view-Img">
+                                                <img [src]="viewImage"  style="height:250px;width:250px;border-radius: 10px;" id="photo-id"/>
+                                                </p>
+                                                </nz-modal>
+                                        </div>
+    </nz-content>

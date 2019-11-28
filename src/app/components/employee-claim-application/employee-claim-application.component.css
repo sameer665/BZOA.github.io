@@ -1,0 +1,130 @@
+.steps-content {
+    margin-top: 16px;
+    border: 1px dashed #e9e9e9;
+    border-radius: 6px;
+    background-color: #fafafa;
+    min-height: 200px;
+    text-align: center;
+    padding-top: 0px;
+  }
+  .steps-action {
+    margin-top: 0px;
+  }
+
+  button {
+    margin-right: 8px;
+  }
+  .form-basic{
+    max-width: 1200px;
+  }
+  .basic_info{
+    background-color: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    float: left;
+    width: 100%;
+    height: auto;
+}
+.basic_title{
+    background-color: #2fa4e7;
+    /* opacity: .5; */
+    color: #fff;
+    font-size: 18px;
+    padding-left: 30px;
+    line-height: 60px;
+    text-align: left;
+}
+.clearfix:after{
+    visibility:hidden;
+    display:block;
+    font-size:0;
+    content: " ";
+    clear:both;
+    height:0;
+}
+.basic_two{
+    float: left;
+    width: 33.33%;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+ 
+.inputBase{
+    line-height: 44px;
+    width: 200px;
+    margin-left: 0px;
+}
+.inputBaseAmount{
+  width: 200px;
+  margin-left: 0px;
+}
+.select-base{
+  width: 200px;
+  float: left;
+  top: 0px;
+  margin-left: 0px;
+  /* padding: 0px 10px; */
+  padding-left: 0px;
+}
+:host::ng-deep.ant-calendar-picker-input.ant-input{
+  width: 200px;
+  top: 0px;
+  margin-left: 0px;
+  /* padding: 0px 10px; */
+}
+.txt-area-height{
+  height: 155px;
+  white-space: normal;
+  word-break: break-all;
+  width: 200px;
+}
+
+i[nz-icon] {
+  font-size: 32px;
+  color: #999;
+}
+.ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
+:host::ng-deep.ant-upload.ant-upload-select-picture-card{
+   /* margin: 0 42px; */
+}
+
+
+.text-center{
+  text-align: center;
+  
+}
+.btnGroup{
+  /* position: relative; */
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  top:0px;
+}
+.baseBtn{
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 36px;
+  border: none;
+  margin-right: 20px;
+  margin-top:5px;
+  width: 190px;
+  cursor: pointer;
+}
+.btnd{
+  /* background-color: #2fa4e7; */
+  margin: 40px 20px;
+  outline: none;
+}
+.btnd1{
+  background-image:linear-gradient(linear,0 0,0 100%,from(#fff),color-stop(5%,#fff),to(#fff));
+  margin: 40px 20px;
+  outline: none;
+}
+@media (min-width: 576px){
+  .ant-col-sm-6 {
+    width: 35%;
+}
+}

@@ -1,0 +1,288 @@
+<nz-layout>
+    <nz-content>
+        <div *ngIf="roleLogin==true" class="alert alert-danger">
+                        {{roleMsg}}
+                        </div>
+        <div *ngIf="roleLogin==false">   
+        <nz-card>
+       
+            <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+            <nz-form-item>
+                    <nz-form-control>
+                            <!-- <nz-month-picker placeholder="Start Date"  formControlName="employeeAttendanceDate" 
+                            [(ngModel)]="employeeAttendanceDate"></nz-month-picker> -->
+                            <nz-date-picker placeholder="Apply Date" [nzDisabledDate]="disabledDate"  formControlName="employeeAttendanceDate" 
+                            [(ngModel)]="employeeAttendanceDate"></nz-date-picker>
+                            </nz-form-control>
+                </nz-form-item>
+                <!-- <nz-form-item>
+                        <nz-form-control>
+                                -
+                        </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item>
+                        <nz-form-control>
+                                <nz-date-picker [nzDisabledDate]="disabledDate" placeholder="End Date"  formControlName="employeeAttendanceEndDate" 
+                                [(ngModel)]="employeeAttendanceEndDate"></nz-date-picker>
+                                </nz-form-control>
+                    </nz-form-item> -->
+                
+            <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                              <input formControlName="employeeNumber" nz-input placeholder="Search Emp No..." 
+                              [(ngModel)]="employeeNumber"   [nzAutocomplete]="auto"  />
+                              </nz-input-group>
+                              <ng-template #suffixIcon>
+                                <i nz-icon nzType="search"></i>
+                              </ng-template>
+                              <nz-autocomplete #auto>
+                                  
+                              </nz-autocomplete>
+                          </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input your employeeName!">
+                                <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                  <input formControlName="employeeName" nz-input placeholder="Search Emp Name..."
+                                  [(ngModel)]="employeeName"   [nzAutocomplete]="auto"  />
+                                  </nz-input-group>
+                              </nz-form-control>
+                    </nz-form-item>
+
+                    <!-- <nz-form-item>
+                        <nz-form-control>
+                                <button nz-button class="login-form-button" [nzType]="'primary'">Search</button>
+                        </nz-form-control>
+                    </nz-form-item> -->
+
+                <nz-form-item>
+                        <nz-form-control>
+                                <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                             nzShowUploadList="true"  
+                             >
+                                    <button nz-button><i nz-icon nzType="upload"></i><span>Click to Upload</span></button>
+                                  </nz-upload>
+                                </nz-form-control>
+                    </nz-form-item>
+
+                    <!-- <nz-form-item>
+                        <nz-form-control> 
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu">Export</button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                                <ul nz-menu>
+                                  <li nz-menu-item (click)="downloadEmployeeList()">Download Employee Details</li>
+                                  <li nz-menu-item (click)="downloadExcelEmployeeTemplate()">Download Employee Details Template</li>
+                                </ul>
+                              </nz-dropdown-menu>
+                        <!-- <button nz-button nzType="primary" [nzSize]="size" (click)="downloadExcelEmployeeTemplate()"><i nz-icon nzType="download"></i>Download Template</button>           -->
+                                <!-- </nz-form-control>
+                    </nz-form-item> --> 
+
+            </form>
+            </nz-card>
+            <!-- List Task Approver-->
+            <div nz-row nzType="flex" nzJustify="start">
+                <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                    <nz-card class="bCard">
+                        <div class="btn-trace">
+                        <button
+                        nz-button
+                        [disabled]="numberOfChecked === 0"
+                        [nzType]="'primary'"
+                        [nzLoading]="isOperating"
+                        (click)="operateData()"
+                        >
+                        Trace
+                        </button>
+                        </div>
+                        <nz-table #ajaxTable nzShowQuickJumper [nzData]="claimDetailsList" class="table-list"
+                        [nzFrontPagination]="true" [nzTotal]="total"
+                        [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize">
+                        <thead (nzSortChange)="sort($event)" nzSingleSort>
+                         <tr>
+                        <th
+                        nzShowCheckbox
+                        [(nzChecked)]="isAllDisplayDataChecked"
+                        [nzIndeterminate]="isIndeterminate"
+                        (nzCheckedChange)="checkAll($event)"
+                        ></th>
+                        <th nzShowSort nzSortKey="userName"
+                        class="white_nowrap">
+                        <span>用户名</span></th>
+                        <th nzShowSort nzSortKey="claimDate"
+                        class="white_nowrap">
+                        <span>申请日期</span></th>
+                        <!-- <th nzShowSort nzSortKey="companyName"
+                        class="white_nowrap">
+                        <span>Company Name</span></th> -->
+                        <!-- <th nzShowSort nzSortKey="bankName"
+                        class="white_nowrap">
+                        <span>Bank Name</span></th> -->
+                        <th nzShowSort nzSortKey="amount"
+                        class="white_nowrap">
+                        <span>账户</span></th>
+                        <th nzShowSort nzSortKey="postGrade"
+                        class="white_nowrap">
+                        <span>级别</span></th>
+                        <th nzShowSort nzSortKey="deduction"
+                        class="white_nowrap">
+                        <span>Deduction</span></th>
+                        <th nzShowSort nzSortKey="totalDeduction"
+                        class="white_nowrap">
+                        <span>Total Deduction</span></th>
+                        <th nzShowSort nzSortKey="invoiceUpload"
+                        class="white_nowrap">
+                        <span>Invoice Image</span></th>
+                        <th nzShowSort nzSortKey="remarks"
+                        class="white_nowrap">
+                        <span>Remarks</span></th>
+                        <th nzShowSort nzSortKey="updateTime"
+                        class="white_nowrap">
+                        <span>Updated Date</span></th>
+                         <th 
+                        class="white_nowrap">
+                        <span>Approved By</span></th>
+                        <th>Action</th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of ajaxTable.data;let i=index">
+                        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.id]" (nzCheckedChange)="refreshStatus()"></td>
+                        <td>
+                                {{item.userName}}
+                        </td>
+                        <td>
+                                {{item.claimDate | date:'yyyy-MM-dd'}}
+                        </td>
+                        <!-- <td>
+                                {{item.companyName}}
+                        </td> -->
+                        <!-- <td>
+                                {{item.bankName}}
+                        </td> -->
+                        <td>
+                                {{item.amount}}
+                        </td>
+                        <td>
+                                {{item.postGrade}}
+                        </td>
+                        <td>
+                                {{item.deduction}}
+                        </td>
+                        <td>
+                                {{item.totalDeduction}}
+                        </td>
+                        <td>
+                         <!-- <img [src]="data:image/jpeg;base64,{{item.invoiceUpload}}" style="height:30px;width:30px" />  
+                        *ngIf="item.processInstanceId==null" 
+                         *ngIf="item.processInstanceId==null" 
+                        *ngIf="item.processInstanceId==null" -->
+                        <img src="{{item.invoiceUpload}}" (click)="getInoiceImageView(item.invoiceUpload)"  style="height:30px;width:30px;border-radius: 4px;" id="photo-id"/>
+                        </td>
+                        <td>
+                                {{item.remarks}}
+                        </td>
+                        <td  class="white_nowrap">
+                                {{item.updateTime}}
+                        </td>
+                        <td  class="white_nowrap">
+                                {{item.approveName}}
+                        </td>
+                        <td>
+                                <div *ngIf="item.processInstanceId!=null && item.claimStatus!=3 && item.approveName==null">
+                                <a>View</a>
+                                <!-- <a (click)="claimAppealTaskList()">
+                                    Task</a> -->
+                                <!-- <nz-divider nzType="vertical"></nz-divider>  -->
+                               
+                                <!-- <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="taskTracking(item.processInstanceId)">
+                                        Track</a> -->
+                                </div>
+                                <!-- <a (click)="claimAppealTaskList()" *ngIf="logined=='finance'">
+                                        Task
+                                </a> (click)="viewClaimList(item.id)"-->
+                                <div  class="white_nowrap" *ngIf="item.processInstanceId!=null && item.claimStatus!=3 && item.approveName=='hrApply'">
+                                                <a >View</a>
+                                              
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <nz-popconfirm [nzTitle]="'Are you sure?'" (nzOnConfirm)="taskReject(item.id,item.taskId,item.processInstanceId,item.approveName)">
+                                                                <a nz-popconfirm>Reject</a>
+                                                </nz-popconfirm>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                 <a (click)="taskApprove(item.id,item.taskId,item.approveName)">
+                                                Approve</a>
+
+                                </div>
+                                <div  class="white_nowrap" *ngIf="item.processInstanceId!=null && item.claimStatus==3 && item.approveName=='hrApply'">
+                                <a >View</a>
+                                </div>
+                                <div  class="white_nowrap" *ngIf="item.processInstanceId!=null && item.claimStatus==3 && item.approveName=='deptApply'">
+                                        <a >View</a>
+                                      
+                                        <nz-divider nzType="vertical"></nz-divider>
+                                        <nz-popconfirm [nzTitle]="'Are you sure?'" (nzOnConfirm)="taskReject(item.id,item.taskId,item.processInstanceId,item.approveName)">
+                                                        <a nz-popconfirm>Reject</a>
+                                        </nz-popconfirm>
+                                        <nz-divider nzType="vertical"></nz-divider>
+                                         <a (click)="taskApprove(item.id,item.taskId,item.approveName)">
+                                        Approve</a>
+
+                               </div>
+                               <div  class="white_nowrap" *ngIf="item.processInstanceId!=null && item.claimStatus==5 && item.approveName=='deptApply'">
+                                        <a >View</a>
+                                </div>
+                                <div  class="white_nowrap" *ngIf="item.processInstanceId!=null && item.claimStatus==5 && item.approveName=='financeApply'">
+                                                <a >View</a>
+                                              
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <nz-popconfirm [nzTitle]="'Are you sure?'" (nzOnConfirm)="taskReject(item.id,item.taskId,item.processInstanceId,item.approveName)">
+                                                                <a nz-popconfirm>Reject</a>
+                                                </nz-popconfirm>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                 <a (click)="taskApprove(item.id,item.taskId,item.approveName)">
+                                                Approve</a>
+        
+                                </div>
+                                
+                                <!-- <div *ngIf="item.employeeClaim.processInstanceId!=null && item.employeeClaim.claimStatus!=3 && item.employeeClaim.approveName!=null && item.employeeClaim!=null">
+                                <a (click)="viewClaimList(item.id)">View</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="taskReject(item.id, item.processInstanceId,item.approveName)">
+                                                Reject</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="taskApprove(item.id,item.taskId,item.approveName)">
+                                                        Approve</a>
+                                </div> -->
+                        </td>
+                        
+                        </tr>
+                        </tbody>
+                        </nz-table>
+                </nz-card>
+                </div>
+            </div>
+            <div *ngIf="isVisibleMiddle==true">
+                <nz-modal
+                nzWrapClassName="vertical-center-modal"
+                [(nzVisible)]="isVisibleMiddle"
+                nzTitle="Invoice Image"
+                (nzOnCancel)="handleCancelMiddle()"
+                >
+                <p class="view-Img">
+                <img [src]="viewImage"  style="height:250px;width:250px;border-radius: 10px;" id="photo-id"/>
+                </p>
+                </nz-modal>
+            </div>
+            <div *ngIf="isVisibleReject==true">
+                <nz-modal   nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisibleReject"
+                 nzMask="true"  nzTitle="Reject Reason" (nzOnOk)="handleRejectReason()"
+                 (nzOnCancel)="handleCancelReject()">
+                <textarea rows="4" nz-input [(ngModel)]="rejectReason" placeholder="Please Enter Reason ..."></textarea>
+              </nz-modal>
+            </div>
+        </div> 
+    </nz-content>
+</nz-layout>

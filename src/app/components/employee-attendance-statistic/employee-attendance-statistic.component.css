@@ -1,0 +1,6 @@
+.chart-div{
+    height: 788px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    position: relative;
+}

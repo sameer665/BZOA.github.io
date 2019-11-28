@@ -1,0 +1,170 @@
+<nz-layout>
+        <nz-content class="heightFull">
+                <nz-card>
+                        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                        <nz-form-item>
+                                <nz-form-control>
+                                        <nz-month-picker [nzDisabledDate]="disabledDate" nzPlaceHolder="请选择月份"
+                                         formControlName="employeeAttendanceDate" [(ngModel)]="employeeAttendanceDate" (ngModelChange)="onSearchEmpByMonths($event)"></nz-month-picker>
+                                        </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                              <input formControlName="employeeNumber" nz-input placeholder="请输入员工号" 
+                                              [(ngModel)]="employeeNumber"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpNo($event)"  />
+                                              </nz-input-group>
+                                              <ng-template #suffixIcon>
+                                                <i nz-icon nzType="search"></i>
+                                              </ng-template>
+                                              <nz-autocomplete #auto>
+                                                  
+                                              </nz-autocomplete>
+                                          </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-control nzErrorTip="Please input your employeeName!">
+                                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                <input formControlName="employeeName" nz-input placeholder="请输入员工姓名"
+                                                [(ngModel)]="employeeName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpName($event)" />
+                                                </nz-input-group>
+                                            </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                        <nz-form-control>
+                                                <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                             nzShowUploadList="true" [(nzFileList)]="fileList" [nzCustomRequest]="customReq"
+                                             >
+                                                    <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                                                  </nz-upload>
+                                                </nz-form-control>
+                                    </nz-form-item>
+                                        <nz-form-item>
+                                            <nz-form-control> 
+                                            <button nz-button nz-dropdown nzType="primary" [nzDropdownMenu]="menu"><i nz-icon nzType="download" nzTheme="outline"></i>下载</button>
+                                            <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                    <ul nz-menu>
+                                                      <li nz-menu-item (click)="downloadPlatformList()">Download Platform List</li>
+                                                      <li nz-menu-item (click)="downloadExcelPlatformTemplate()">Download Platform Template</li>
+                                                    </ul>
+                                                  </nz-dropdown-menu>
+                                                    </nz-form-control>
+                                        </nz-form-item>
+                        </form>
+                        </nz-card>
+                        <!-- List  Platform-->
+                        <nz-card class="bCard">
+
+                                <nz-table #ajaxTable nzShowQuickJumper [nzData]="employeePlatformList"
+                                [nzFrontPagination]="true" [nzTotal]="total"
+                                [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize">
+                                <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                        <tr>
+                                                <th nzShowSort nzSortKey="empId"
+                                                class="white_nowrap">
+                                                <span>雇员ID</span></th>
+                                                <th nzShowSort nzSortKey="empName"
+                                                    class="white_nowrap">
+                                                    <span>员工姓名</span></th>
+                                                <th nzShowSort nzSortKey="empDeptName"
+                                                    class="white_nowrap">
+                                                    <span>部门</span></th>
+                                                <th nzShowSort nzSortKey="empFundMonth"
+                                                class="white_nowrap">
+                                                <span>月份</span></th>
+                                                <th nzShowSort nzSortKey="empDaysOfMonth"
+                                                class="white_nowrap">
+                                                <span>本月自然日数</span></th>
+                                                <th nzShowSort nzSortKey="empAvgRatesInterest"
+                                                    class="white_nowrap">
+                                                    <span>日均总权益</span></th>
+                                                <th nzShowSort nzSortKey="empCumulativeIssuance"
+                                                    class="white_nowrap">
+                                                    <span>平台累计发放
+                                                            (4月起）</span></th>
+                                                <th nzShowSort nzSortKey="empFinalAccumulated"
+                                                class="white_nowrap">
+                                                    <span>平台总发放(折算后）</span>
+                                                </th>
+                                                <th nzShowSort nzSortKey="empCapitalBalanceRatio"
+                                                    class="white_nowrap">
+                                                    <span>资金结存比率(%)</span></th>
+                                                <th nzShowSort nzSortKey="empCapitalBalanceScore"
+                                                    class="white_nowrap">
+                                                    <span>（满分40）</span>
+                                                    <br>
+                                                    
+                                                </th>
+                                            </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                    <td>
+                                        {{item.empId}}
+                                    </td>
+                                    <td>
+                                        {{item.empName}}
+                                    </td>
+                                    <td>
+                                        {{item.empDeptName}}
+                                    </td>
+                                    <td>
+                                        {{item.empFundMonth | date:'yyyy-MM'}}
+                                    </td>
+                                    <td>
+                                        {{item.empDaysOfMonth}}
+                                    </td>
+                                    <td>
+                                        {{item.empAvgRatesInterest}}
+                                        
+                                    </td>
+                                    <td>
+                                            {{item.empCumulativeIssuance}}
+                                            
+                                    </td>
+                                    <td>
+                                        {{item.empFinalAccumulated}}
+                                    </td>
+                                    <td>
+                                            {{item.empCapitalBalanceRatio}}
+                                            
+                                        </td>
+                                        <td>
+                                            {{item.empCapitalBalanceScore}}
+                                            
+                                        </td>
+
+                                    <!-- <td *ngIf="bonusScoreStatus==true">
+                                            <input  #inputElement style="width: 80px" nz-input  nzTrigger="focus"  nzOverlayClassName="numeric-input"   [(ngModel)]="supervisorScore1"  placeholder="Score 1" (ngModelChange)="updateBonusScore1($event)" (blur)="onBlur()">
+                                    </td>
+                                    <td *ngIf="bonusScoreStatus==true">
+                                            <input  #inputElement style="width: 80px" nz-input  nzTrigger="focus"  nzOverlayClassName="numeric-input" [(ngModel)]="supervisorScore2"  placeholder="Score 2" (ngModelChange)="updateBonusScore2($event)" (blur)="onBlur()">
+                                    </td>
+                                    <td *ngIf="bonusScoreStatus==true">
+                                            <input   #inputElement style="width: 80px"  nz-input  nzTrigger="focus"  nzOverlayClassName="numeric-input"  [(ngModel)]="supervisorScore3" placeholder="Score 3" (ngModelChange)="updateBonusScore3($event)" (blur)="onBlur()">
+                                    </td>
+                                    <td>
+                                        {{item.bonusScore}}
+                                    </td> -->
+                                    <!-- <td>
+                                            <div *ngIf="bonusScoreStatus==false">
+                                                    <a  (click)="updateBonusScore(item.employeeId)">Edit</a>
+                                                    <nz-divider nzType="vertical"></nz-divider>
+                                                     <a >Delete</a>
+                                             </div>
+                                             <div *ngIf="bonusScoreStatus==true">
+                                                    <a  (click)="saveBonusScore(item.employeeId)">Save</a>
+                                                    <nz-divider nzType="vertical"></nz-divider>
+                                                     <a >Delete</a>
+                                             </div> -->
+                                            
+                                            
+                                            <!-- <button nz-button nzType="link" nzBlock>Add</button>
+                                            <button nz-button nzType="link" nzBlock>Edit</button>
+                                            <a nz-popconfirm nzTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a> -->
+                                            <!-- <a nz-popconfirm nzTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a> -->
+                                          <!-- </td> -->
+                                </nz-table>
+                        </nz-card>
+            </nz-content>
+</nz-layout>

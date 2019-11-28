@@ -1,0 +1,205 @@
+<nz-layout>
+    <nz-content class="heightFull">
+            <!-- List  Claims-->
+            <div class="contentRight clearfix">
+                <nz-card class="bCard">
+                            <div class="basic_info">
+                            <div class="basic_title">
+                                积分兑换和报销申请 PointsExchange and Expenses Claim
+                             </div>
+                             <div class="basic_detail clearfix">
+                                    
+                                    <form nz-form [formGroup]="validateForm" class="form-basic">
+                                    <div class="basic_two">
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeClaimDate">申请日期Apply Date</nz-form-label>
+                                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Date">
+                                            <nz-date-picker [nzDisabledDate]="disabledDate" placeholder="Claim Date" 
+                                       formControlName="employeeClaimDate" [(ngModel)]="employeeClaimDate"  class="inputBase"></nz-date-picker>
+                                   </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeClaimDate">公司Company Name</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Company">
+                                                    <nz-select class="select-base"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        nzPlaceHolder="Select a Company Name"
+                                                        formControlName="employeeCompanyName"
+                                                        [(ngModel)]="employeeCompanyName"
+                                                        >
+                                                        <nz-option nzLabel="宝智" nzValue="0"></nz-option>
+                                                        <nz-option nzLabel="元教" nzValue="1"></nz-option>
+                                                        <nz-option nzLabel="教汇" nzValue="2"></nz-option>
+                                                        <nz-option nzLabel="随影" nzValue="3"></nz-option>
+                                                        <nz-option nzLabel="丸家" nzValue="4"></nz-option>
+                                                        </nz-select>
+                                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeReceiptAccount">银行Bank Name</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Bank">
+                                                    <nz-select class="select-base"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        nzPlaceHolder="Select a Bank"
+                                                        formControlName="employeeReceiptAccount"
+                                                        [(ngModel)]="employeeReceiptAccount"
+                                                        >
+                                                        <nz-option nzLabel="ABC" nzValue="0"></nz-option>
+                                                        <nz-option nzLabel="BOC" nzValue="1"></nz-option>
+                                                        <nz-option nzLabel="ICBC" nzValue="2"></nz-option>
+                                                        <nz-option nzLabel="MERCHANT" nzValue="3"></nz-option>
+                                                        <nz-option nzLabel="PINGAN" nzValue="4"></nz-option>
+                                                        <nz-option nzLabel="SPDG" nzValue="5"></nz-option>
+                                                        <nz-option nzLabel="ALI-PAY" nzValue="6"></nz-option>
+                                                        </nz-select>
+                                                        </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeAccountNo">账户Account No</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Account No!">
+                                                <input nz-input nzAllowClear  #inputElement  nzTrigger="focus" nzOverlayClassName="numeric-input" (ngModelChange)="onChangeBankActNo($event)" (blur)="onBlurBankAcntNo()"  class="inputBaseAmount" formControlName="employeeAccountNo"  [(ngModel)]="employeeAccountNo"   placeholder="账号">
+                                        </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeAccountNo">账户Account No</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Account No!">
+                                                <input nz-input nzAllowClear  #inputElement  nzTrigger="focus" nzOverlayClassName="numeric-input" (ngModelChange)="onChangeBankActNo($event)" (blur)="onBlurBankAcntNo()"  class="inputBaseAmount" formControlName="employeeAccountNo"  [(ngModel)]="employeeAccountNo"   placeholder="账号">
+                                        </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeAccountNo">账户Account No</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Account No!">
+                                                <input nz-input nzAllowClear  #inputElement  nzTrigger="focus" nzOverlayClassName="numeric-input" (ngModelChange)="onChangeBankActNo($event)" (blur)="onBlurBankAcntNo()"  class="inputBaseAmount" formControlName="employeeAccountNo"  [(ngModel)]="employeeAccountNo"   placeholder="账号">
+                                        </nz-form-control>
+                                </nz-form-item>
+                                    
+                                </div>
+                                <div class="basic_two">
+                                        <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="amount">报销金额Claim Amount</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Amount!">
+                                                        <input nz-input nzAllowClear  class="inputBaseAmount" formControlName="amount"  [(ngModel)]="amount"   placeholder="数量">
+                                                </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="categoryOfLargeExpenses">礼品类别Gift Type</nz-form-label>
+                                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Gift Type">
+                                                        <input nz-input nzAllowCleaRemarksr [disabled]="true"  class="inputBaseAmount" formControlName="categoryOfLargeExpenses"  [(ngModel)]="categoryOfLargeExpenses"   placeholder="Gift Type">
+                                                            </nz-form-control>
+                                        </nz-form-item>
+                                    <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="postGrade">级别Postition Grade</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Post Grade">
+                                        <nz-select class="select-base" style="top:5px"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        nzPlaceHolder="Select Post Grade"
+                                                        formControlName="postGrade"
+                                                        [(ngModel)]="postGrade"
+                                                        >
+                                                        <nz-option nzLabel="A1" nzValue="0"></nz-option>
+                                                        <nz-option nzLabel="A2" nzValue="1"></nz-option>
+                                                        <nz-option nzLabel="A3" nzValue="2"></nz-option>
+                                                        <nz-option nzLabel="B1" nzValue="3"></nz-option>
+                                                        <nz-option nzLabel="B2" nzValue="4"></nz-option>
+                                                        <nz-option nzLabel="B3" nzValue="5"></nz-option>
+                                                        <nz-option nzLabel="C1" nzValue="6"></nz-option>
+                                                        </nz-select>
+                                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="grandPrizes">礼品选择Gift Select</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Prize">
+                                    <nz-select class="select-base"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        formControlName="grandPrizes"Select
+                                                        [(ngModel)]="grandPrizes"
+                                                        (ngModelChange)="getGrandPrizeType()"
+                                                        >
+                                                        <nz-option *ngFor="let p of giftList" [nzValue]="p.giftId" [nzLabel]="p.giftName"></nz-option>                                                    
+                                                        </nz-select>
+                                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="deduction">积分/个Unit/Prize</nz-form-label>
+                                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please Enter Unit/Prize!">
+                                    <input nz-input nzAllowClear class="inputBaseAmount" formControlName="deduction" [disabled]="true"   [(ngModel)]="deduction" (keyup)="getTotalDeduction($event)"  placeholder="演绎">
+                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="deduction">数量No of Prizes</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please Enter Deduction!">
+                                <input nz-input nzAllowClear class="inputBaseAmount" formControlName="noOfPrizes"  [(ngModel)]="noOfPrizes" (keyup)="getNoOfPrizes($event)"  placeholder="奖品数量">
+                            </nz-form-control>
+                    </nz-form-item>
+                                </div>
+                                <div class="basic_two">
+                                        <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="totalDeduction">总兑换积分Total Duduction</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                    <input nz-input nzAllowClear [disabled]="true"  class="inputBaseAmount" formControlName="totalDeduction"  [(ngModel)]="totalDeduction" placeholder="扣除总额">
+                                                </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="claimAmount">总报销金额Reward/Claim</nz-form-label>
+                                                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                        <input nz-input nzAllowClear [disabled]="true"  class="inputBaseAmount" formControlName="claimAmount"  [(ngModel)]="claimAmount"   placeholder="Claim Amount">
+                                                            </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeName">发票黏贴Invoice</nz-form-label>
+                                                        <div class="clearfix">
+                                                                <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload"
+                                                                         nzAction="hrAdmin/uploadInvoiceUrl"
+                                                                         [nzPreview]="handlePreviewElec"
+                                                                         nzListType="picture-card"
+                                                                         [nzBeforeUpload]="beforeUpload" 
+                                                                         [nzShowButton]="fileList.length"
+                                                                         [nzAccept]="'image/*'"
+                                                                         nzMultiple="true">
+                                                                        <i nz-icon nzType="plus"></i>
+                                                                        <div class="ant-upload-text">Upload</div>
+                                                                </nz-upload>
+                                                                <nz-modal
+                                                                    [nzVisible]="previewVisible"
+                                                                    [nzContent]="modalContent"
+                                                                    [nzFooter]="null"
+                                                                    (nzOnCancel)="previewVisible = false"
+                                                                >
+                                                                    <ng-template #modalContent>
+                                                                    <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                                                                    </ng-template>
+                                                                </nz-modal>
+                                                            </div>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">备注Remarks</nz-form-label>
+                                            <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                <textarea nz-input rows="2"   maxlength="1000" placeholder="Purpose of Reiumbersment" formControlName="description" 
+                                                 [(ngModel)]="description" class="inputAreaBase txt-area-height">
+                                                </textarea>
+                                            </nz-form-control>
+                                    </nz-form-item>
+                                        
+                                        
+                                    </div>
+                                    </form>
+                            </div> 
+                      </div>
+                    
+                    <!-- </div> -->
+                      <!-- <div class="steps-action">
+                      </div> -->
+                    <div class="btnGroup text-center">
+                        
+                        <button nz-button nzType="primary" class="baseBtn btnd" *ngIf="status!='edit' && status!='scan'" (click)="submitClaimReiumbersment()">Submit</button>
+                        <button class="baseBtn btnd" (click)="updateClaimReiumbersment()" *ngIf="status=='edit'">Update</button>
+                        <button class="baseBtn btnd1"  (click)="returnBack()">Cancel</button>
+                  </div>
+                </nz-card>
+            </div>
+    </nz-content>
+</nz-layout>

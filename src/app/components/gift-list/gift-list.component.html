@@ -1,0 +1,94 @@
+<nz-layout>
+    <nz-content class="heightFull">
+            <nz-card>
+                    <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please input your employeeName!">
+                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                            <input formControlName="giftName" nz-input placeholder="Search Gift Name..." style="border-radius: 5px;"
+                                            [(ngModel)]="giftName"   [nzAutocomplete]="auto" />
+                                            </nz-input-group>
+                                            <ng-template #suffixIcon>
+                                                <i nz-icon nzType="search"></i>
+                                              </ng-template>
+                                              <nz-autocomplete #auto>
+                                                  
+                                              </nz-autocomplete>
+                                        </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-control>
+                                            <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                         nzShowUploadList="true" [(nzFileList)]="fileList" [nzCustomRequest]="customReq"
+                                         >
+                                                <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                                              </nz-upload>
+                                            </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                        <nz-form-control> 
+                                        <button nz-button nzType="primary"  nz-dropdown [nzDropdownMenu]="menu"><i nz-icon nzType="download" nzTheme="outline"></i>下载</button>
+                                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                <ul nz-menu>
+                                                <!-- <li nz-menu-item (click)="downloadGiftList()">Download Gift List</li> -->
+                                                <li nz-menu-item (click)="downloadExcelGiftTemplate()">Download Gift  Template</li>
+                                                </ul>
+                                                </nz-dropdown-menu>
+                                                </nz-form-control>
+                                </nz-form-item>
+                    </form>
+                    </nz-card>
+            <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+     <nz-card>
+        <nz-table #ajaxTable nzShowQuickJumper [nzData]="empGiftList" class="table-list"
+        [nzFrontPagination]="true" [nzTotal]="total"
+        [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+        (nzPageIndexChange)="getEmpGiftList()"
+        (nzPageSizeChange)="getEmpGiftList()">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+        <th nzShowSort nzSortKey="giftId"
+        class="white_nowrap">
+        <span>ID</span></th>
+        <th nzShowSort nzSortKey="giftName"
+        class="white_nowrap">
+        <span>Gift Name</span></th>
+        <th nzShowSort nzSortKey="giftPointsQuantity"
+        class="white_nowrap">
+        <span>Gift Quantity</span></th>
+        <th nzShowSort nzSortKey="giftBenefits"
+        class="white_nowrap">
+        <span>Gift Benefits</span></th><th nzShowSort nzSortKey="giftTypes"
+        class="white_nowrap">
+        <span>Gift Types</span></th><th nzShowSort nzSortKey="giftComments"
+        class="white_nowrap">
+        <span>Gift Comments</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of ajaxTable.data;let i=index">      
+        <td>
+        {{item.giftId}}
+        </td>
+        <td>
+        {{item.giftName}}
+        </td>
+        <td>
+        {{item.giftPointsQuantity}}
+        </td>
+        <td>
+        {{item.giftBenefits}}
+        </td>
+        <td>
+        {{item.giftTypes}}
+        </td>
+        <td>
+        {{item.giftComments}}
+        </td>
+        </tr>
+        </tbody>
+        </nz-table>
+     </nz-card>
+     </div>
+    </nz-content>
+    </nz-layout>

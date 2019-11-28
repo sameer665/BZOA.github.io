@@ -1,0 +1,327 @@
+<nz-layout>
+        <nz-content class="heightFull">
+                <!-- <nz-card>
+                <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                <nz-form-item>
+                        <nz-form-control>
+                                <nz-month-picker [nzDisabledDate]="disabledDate" placeholder="Bonus Date" 
+                                 formControlName="employeeBonusDate" [(ngModel)]="employeeBonusDate"></nz-month-picker>
+                                </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                            <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                                    <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                      <input formControlName="employeeNumber" nz-input placeholder="employeeNumber" 
+                                      [(ngModel)]="employeeNumber"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpNo($event)"  />
+                                      </nz-input-group>
+                                  </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-control nzErrorTip="Please input your employeeName!">
+                                    <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                        <input formControlName="employeeName" nz-input placeholder="employeeName"
+                                        [(ngModel)]="employeeName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpName($event)" />
+                                        </nz-input-group>
+                                    </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                        <nz-select
+                                            style="width: 200px;top:7px;"
+                                            nzShowSearch
+                                            nzAllowClear
+                                            nzPlaceHolder="Select a SuperVisor Name"
+                                            formControlName="superVisorName"
+                                            [(ngModel)]="superVisorName"
+                                            (ngModelChange)="selectSuperVisorName($event)"
+                                            >
+                                            <nz-option nzLabel="刘浩" nzValue="0"></nz-option>
+                                            <nz-option nzLabel="沈怡妮" nzValue="1"></nz-option>
+                                            <nz-option nzLabel="孙静" nzValue="2"></nz-option>
+                                            <nz-option nzLabel="唐文杰" nzValue="3"></nz-option>
+                                            <nz-option nzLabel="张要可" nzValue="4"></nz-option>
+                                            <nz-option nzLabel="周诗旖" nzValue="5"></nz-option>
+                                            </nz-select>
+                                        </nz-input-group>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-control>
+                                        <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                     nzShowUploadList="true" [(nzFileList)]="fileList" [nzCustomRequest]="customReq"
+                                     >
+                                            <button nz-button><i nz-icon nzType="upload"></i><span>Click to Upload</span></button>
+                                          </nz-upload>
+                                        </nz-form-control>
+                            </nz-form-item>
+
+                            <nz-form-item>
+                                    <nz-form-control> 
+                                    <button nz-button nzType="primary" [nzSize]="size" (click)="downloadExcelEmployeeTemplate()"><i nz-icon nzType="download"></i>Download Template</button>          
+                                            </nz-form-control>
+                                </nz-form-item>
+                </form>
+                </nz-card> -->
+                <!-- List  Bonus-->
+                <div class="ant-row">        
+                <!-- <div  class="ant-col-16 bonus-table-list"> -->
+                <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                <nz-card class="bCard">
+                        <nz-table #ajaxTable  nzShowQuickJumper
+                        [nzFrontPagination]="true"
+                        [nzFrontPagination]="true" [nzTotal]="total"
+                        [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                        (nzPageIndexChange)="getEmployeeBonusList()"
+                         [nzData]="employeeBonusList"
+                         (nzPageSizeChange)="getEmployeeBonusList()">
+                        <thead  (nzSortChange)="sort($event)" nzSingleSort>
+                                <tr>
+                                        <th nzShowSort nzSortKey="empId"
+                                        class="white_nowrap">
+                                        <span>员工ID</span></th>
+                                        <th nzShowSort nzSortKey="empName"
+                                            class="white_nowrap">
+                                            <span>员工姓名</span></th>
+                                        <th nzShowSort nzSortKey="empDeptName"
+                                            class="white_nowrap">
+                                            <span>部门</span></th>
+                                        <th nzShowSort nzSortKey="empLeaderName"
+                                            class="white_nowrap">
+                                            <span>主管姓名</span></th>
+                                        <th
+                                        class="white_nowrap">
+                                        <span>本月</span></th>
+                                        <!-- <th nzShowSort nzSortKey="empSupervisorName"
+                                            class="white_nowrap">
+                                            <span>主管姓名</span></th>
+                                            <th nzShowSort nzSortKey="empBonusDays"
+                                            class="white_nowrap">
+                                            <span>本月天数</span></th>        
+                                        <th nzShowSort nzSortKey="empSupervisorScore1"
+                                            class="white_nowrap">
+                                            <span>主管打分(10号)</span></th>
+                                        <th nzShowSort nzSortKey="empSupervisorScore2"
+                                            class="white_nowrap">
+                                            <span>主管打分(20号)</span></th>
+                                        <th nzShowSort nzSortKey="empSupervisorScore3"
+                                            class="white_nowrap">
+                                            <span>主管打分(月底)</span></th>
+                                        <th nzShowSort nzSortKey="empBonusScore"
+                                            class="white_nowrap">
+                                            <span>本月主管总评分
+                                                    </span></th> -->
+                                        <th>Action</th>
+                                    </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of ajaxTable.data;let i=index">
+                            <td>
+                                {{item.empId}}
+                            </td>
+                            <td>
+                                {{item.empName}}
+                            </td>
+                            <td>
+                                {{item.empDeptName}}
+                            </td>
+                            <td>
+                                {{item.empLeaderName}}
+                            </td>
+                            <td>
+                            {{employeeBonusDate | date:'yyyy-MM'}} 
+                            </td>
+                            <!-- <td>
+                                {{item.empSupervisorName}} 
+                            </td> -->
+                            <td>
+                            <!-- <div *ngIf="item.empBonusStatus==0"> -->
+                                        <!-- <a  (click)="AddBonusScore(item.id, item.empId,item.empName,item.empDeptName,item.empLeaderName)">Add</a>
+                                        <nz-divider nzType="vertical"></nz-divider>
+                                        <a (click)="viewBonusScore(item.id, item.empId,item.empName,item.empDeptName,item.empLeaderName)">View</a> -->
+                            <!-- </div> -->
+                            <div *ngIf="item.empBonusStatus==1">
+                            <a  (click)="updateBonusScore(item.id, item.employeeId,item.employeeName,item.deptName,item.empMonthlyDate,item.empSupervisorName,item.empBonusDays,item.supervisorScore1,item.supervisorScore2,item.supervisorScore3)">Edit</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a (click)="viewBonusScore(item.id, item.employeeId,item.employeeName,item.deptName,item.empMonthlyDate,item.empSupervisorName,item.empBonusDays,item.supervisorScore1,item.supervisorScore2,item.supervisorScore3)">View</a>
+                            </div>
+                            </td>
+                           </tr>
+                        </tbody>
+                        </nz-table>
+                        <nz-modal
+                            nzWrapClassName="vertical-center-modal"
+                            [(nzVisible)]="isVisibleMiddle"
+                            nzTitle="Add Bonus Score "
+                            (nzOnCancel)="handleCancelMiddle()"
+                            >
+                            <form nz-form [formGroup]="validateForm" class="form-bonus" (ngSubmit)="submitForm()">
+                                    <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormNumber">Employee No</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                                            <input nz-input formControlName="empFormNumber" [(ngModel)]="empFormNumber" disabled />
+                                    </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormName">Employee Name</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                    <input nz-input formControlName="empFormName" [(ngModel)]="empFormName" disabled />
+                                            </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormDeptName">Dept Name</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                    <input nz-input formControlName="empFormDeptName" [(ngModel)]="empFormDeptName" disabled />
+                                            </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormBonusDate">Bonus Month</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24">
+                                                    <input nz-input formControlName="empFormBonusDate" [(ngModel)]="empFormBonusDate" disabled />
+                                            </nz-form-control>
+                                    </nz-form-item>
+                                    <nz-form-item>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormSupervisorName" nzRequired>Supervisor</nz-form-label>
+                                                
+                                            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Supervisor">
+                                                    <!-- <input nz-input formControlName="empFormSupervisorName" [(ngModel)]="superVisorName" /> -->
+                                                    <nz-select
+                                            style="width: 275px;top:7px;"
+                                            nzShowSearch
+                                            nzAllowClear
+                                            nzPlaceHolder="Select a SuperVisor Name"
+                                            formControlName="empFormSupervisorName"
+                                            [(ngModel)]="empFormSupervisorName"
+                                            >
+                                            <nz-option nzLabel="刘浩" nzValue="0"></nz-option>
+                                            <nz-option nzLabel="沈怡妮" nzValue="1"></nz-option>
+                                            <nz-option nzLabel="孙静" nzValue="2"></nz-option>
+                                            <nz-option nzLabel="唐文杰" nzValue="3"></nz-option>
+                                            <nz-option nzLabel="张要可" nzValue="4"></nz-option>
+                                            <nz-option nzLabel="周诗旖" nzValue="5"></nz-option>
+                                            </nz-select>
+                                            </nz-form-control>
+                                    </nz-form-item>
+                                    <!-- <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="noOfDaysMonth" nzRequired>No of Days</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Days">
+                                    <nz-select
+                                    style="width: 275px;top:7px;"
+                                    nzShowSearch
+                                    nzAllowClear
+                                    nzPlaceHolder="Select No Of Days"
+                                    formControlName="noOfDaysMonth"
+                                    [(ngModel)]="noOfDaysMonth"
+                                    >
+                                    <nz-option nzLabel="15" nzValue="15"></nz-option>
+                                    <nz-option nzLabel="16" nzValue="16"></nz-option>
+                                    <nz-option nzLabel="17" nzValue="17"></nz-option>
+                                    <nz-option nzLabel="18" nzValue="18"></nz-option>
+                                    <nz-option nzLabel="19" nzValue="19"></nz-option>
+                                    <nz-option nzLabel="20" nzValue="20"></nz-option>
+                                    <nz-option nzLabel="21" nzValue="21"></nz-option>
+                                    <nz-option nzLabel="22" nzValue="22"></nz-option>
+                                    <nz-option nzLabel="23" nzValue="23"></nz-option>
+                                    <nz-option nzLabel="24" nzValue="24"></nz-option>
+                                    <nz-option nzLabel="25" nzValue="25"></nz-option>
+                                    <nz-option nzLabel="26" nzValue="26"></nz-option>
+                                    <nz-option nzLabel="27" nzValue="27"></nz-option>
+                                    <nz-option nzLabel="28" nzValue="28"></nz-option>
+                                    <nz-option nzLabel="29" nzValue="29"></nz-option>
+                                    <nz-option nzLabel="30" nzValue="30"></nz-option>
+                                    <nz-option nzLabel="31" nzValue="31"></nz-option>
+                                    </nz-select>
+                                    </nz-form-control>
+                                    </nz-form-item> -->
+                                    <nz-form-item>
+                                        <nz-input-group>
+                                            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="superVisorName" nzRequired>Score</nz-form-label>
+                                            <nz-input-number formControlName="supervisorScore1" id="supervisorScore"  nzErrorTip="Please Enter Score 1!"
+                                            [(ngModel)]="supervisorScore1" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                            <nz-input-number formControlName="supervisorScore2"  nzErrorTip="Please Enter Score 2!"
+                                            [(ngModel)]="supervisorScore2" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                                <nz-input-number formControlName="supervisorScore3"  nzErrorTip="Please Enter End of Month Score!"
+                                                    [(ngModel)]="supervisorScore3" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                        </nz-input-group>
+                                    </nz-form-item>
+                                    <div class="btn-align" *ngIf="btnStatus==false">
+                                            <nz-form-item>
+                                                    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                                                      <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="saveBonusScore()">Submit</button>
+                                                      <button nz-button (click)="resetForm()">Reset</button>
+                                                    </nz-form-control>
+                                                  </nz-form-item>
+                                    </div>
+                                    <div class="btn-align" *ngIf="btnStatus==true">
+                                        <nz-form-item>
+                                                <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                                                  <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="updateBonusScoreById()">Update</button>
+                                                  <button nz-button (click)="resetForm()">Reset</button>
+                                                </nz-form-control>
+                                              </nz-form-item>
+                                </div>
+                                    </form> 
+                            </nz-modal>
+                </nz-card>
+            </div>
+                <!-- <div  class="ant-col-8">
+                        <div class="class-add-modify">
+                                <div class="basic_title">
+                                <span title>Add Bonus Score </span>
+                                </div>
+                        
+                         <form nz-form [formGroup]="validateForm" class="form-bonus" (ngSubmit)="submitForm()">
+                        <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormNumber">Employee No</nz-form-label>
+                            <nz-form-control [nzSm]="14" [nzXs]="24">
+                                <input nz-input formControlName="empFormNumber" [(ngModel)]="empFormNumber" disabled />
+                        </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormName">Employee Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <input nz-input formControlName="empFormName" [(ngModel)]="empFormName" disabled />
+                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormDeptName">Dept Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <input nz-input formControlName="empFormDeptName" [(ngModel)]="empFormDeptName" disabled />
+                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormBonusDate">Employee Date</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <input nz-input formControlName="empFormBonusDate" [(ngModel)]="empFormBonusDate" disabled />
+                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="empFormSupervisorName">Supervisor Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <input nz-input formControlName="empFormSupervisorName" [(ngModel)]="superVisorName" disabled />
+                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-input-group>
+                                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="superVisorName" nzRequired>Score</nz-form-label>
+                                <nz-input-number formControlName="supervisorScore1"   nzErrorTip="Please write something here!"
+                                [(ngModel)]="supervisorScore1" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                <nz-input-number formControlName="supervisorScore2"  nzErrorTip="Please write something here!"
+                                [(ngModel)]="supervisorScore2" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                                    <nz-input-number formControlName="supervisorScore3"  nzErrorTip="Please write something here!"
+                                        [(ngModel)]="supervisorScore3" [nzMin]="0" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                            </nz-input-group>
+                        </nz-form-item>
+                        <div class="btn-align">
+                                <nz-form-item>
+                                        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                                          <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+                                          <button nz-button (click)="resetForm($event)">Reset</button>
+                                        </nz-form-control>
+                                      </nz-form-item>
+                        </div>
+                        </form> 
+                    </div>
+                </div> -->
+        </div>
+        </nz-content>
+</nz-layout>
+

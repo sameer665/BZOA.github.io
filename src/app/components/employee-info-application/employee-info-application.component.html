@@ -1,0 +1,108 @@
+<nz-layout>
+        <nz-content class="heightFull">
+                <nz-card class="bCard">
+                        <div class="basic_info">
+                                <div class="basic_title">
+                                        新员工添加
+                                     </div>
+                                     <div class="basic_detail clearfix">
+                                    <form nz-form [formGroup]="validateForm" class="form-basic">
+                                            <nz-form-item>
+                                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeId">Employee ID</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter ID!">
+                                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="employeeId"  [(ngModel)]="employeeId"   placeholder="Employee ID" (keyup)="chckUniqueId($event)">
+                                                    </nz-form-control>
+                                            </nz-form-item>
+                                            <nz-form-item>
+                                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeName">Employee Name</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Name!">
+                                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="employeeName"  [(ngModel)]="employeeName"   placeholder="Employee Name">
+                                                    </nz-form-control>
+                                            </nz-form-item>
+                                            <nz-form-item>
+                                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="employeeMobile">Employee Mobile</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Mobile!">
+                                                                <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                                                                <ng-template #addOnBeforeTemplate>
+                                                                <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+                                                                        <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+                                                                        <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+                                                                        <nz-option nzLabel="+1" nzValue="+1"></nz-option>
+                                                                </nz-select>
+                                                                </ng-template>
+                                                                <input nz-input nzAllowClear class="inputBaseMobile" formControlName="employeeMobile"  [(ngModel)]="employeeMobile"   placeholder="Employee Mobile">
+                                                                </nz-input-group>
+                                                    </nz-form-control>
+                                            </nz-form-item>
+                                            <nz-form-item>
+                                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="empCompanyName">Company Name</nz-form-label>
+                                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Company">
+                                                    <nz-select class="select-base"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        nzPlaceHolder="Select CompanyName"
+                                                        formControlName="empCompanyName"
+                                                        [(ngModel)]="empCompanyName"
+                                                        [nzDisabled]="view">
+                                                        <nz-option nzLabel="宝智" nzValue="宝智"></nz-option>
+                                                        <nz-option nzLabel="元教" nzValue="元教"></nz-option>
+                                                        <nz-option nzLabel="教汇" nzValue="教汇"></nz-option>
+                                                        <nz-option nzLabel="随影" nzValue="随影"></nz-option>
+                                                        <nz-option nzLabel="丸家" nzValue="丸家"></nz-option>
+                                                        </nz-select>
+                                                        </nz-form-control>
+                                            </nz-form-item>
+                                                <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="empDeptName">Department Name</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Department">
+                                                <nz-select class="select-base"
+                                                        nzShowSearch
+                                                        nzAllowClear
+                                                        nzPlaceHolder="Select Department"
+                                                        formControlName="empDeptName"
+                                                        [(ngModel)]="empDeptName"  [nzDisabled]="view">
+                                                        <nz-option nzLabel="项目技术部" nzValue="项目技术部"></nz-option>
+                                                        <nz-option nzLabel="人事部" nzValue="人事部"></nz-option>
+                                                        <nz-option nzLabel="市场部" nzValue="市场部"></nz-option>
+                                                        <nz-option nzLabel="运营保障部" nzValue="运营保障部"></nz-option>
+                                                        <nz-option nzLabel="运营保障部" nzValue="运营保障部"></nz-option>
+                                                        <nz-option nzLabel="总经办" nzValue="总经办"></nz-option>
+                                                        <nz-option nzLabel="总经办" nzValue="总经办"></nz-option>
+                                                        <nz-option nzLabel="财务部" nzValue="财务部"></nz-option>
+                                                        <nz-option nzLabel="后勤部" nzValue="后勤部"></nz-option>
+                                                        </nz-select>
+                                                </nz-form-control>
+                                                        </nz-form-item>
+                                                        <nz-form-item>
+                                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="empLeaderName">Supervisor Name</nz-form-label>
+                                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Supervisor">
+                                                        <nz-select class="select-base"
+                                                                                nzShowSearch
+                                                                                nzAllowClear
+                                                                                nzPlaceHolder="Select Leader Name"
+                                                                                formControlName="empLeaderName"
+                                                                                [(ngModel)]="empLeaderName" [nzDisabled]="view">
+                                                                                <nz-option nzLabel="唐文杰" nzValue="唐文杰"></nz-option>
+                                                                                <nz-option nzLabel="刘浩" nzValue="刘浩"></nz-option>
+                                                                                <nz-option nzLabel="刘浩" nzValue="刘浩"></nz-option>
+                                                                                <nz-option nzLabel="孙静" nzValue="孙静"></nz-option>
+                                                                                <nz-option nzLabel="张要可" nzValue="张要可"></nz-option>
+                                                                                <nz-option nzLabel="唐文杰" nzValue="唐文杰"></nz-option>
+                                                                                <nz-option nzLabel="周诗旖" nzValue="周诗旖"></nz-option>
+                                                                                <nz-option nzLabel="孙兰玲" nzValue="孙兰玲"></nz-option>
+                                                                                </nz-select>
+                                                                        </nz-form-control>
+                                                </nz-form-item>
+                                
+                                    </form>
+                                    </div>
+
+                            </div>
+                            <div class="btnGroup text-center">
+                                    <button nz-button class="baseBtn btnd" (click)="submitEmpApplication()" *ngIf="viewBtnStatus==false">Submit</button>
+                                    <button class="baseBtn btnd" (click)="updateEmpApplication()" *ngIf="status=='edit'">Update</button>
+                                    <button class="baseBtn btnd1"  (click)="returnBack()">Cancel</button>
+                                </div>
+                </nz-card>
+        </nz-content>
+        </nz-layout>

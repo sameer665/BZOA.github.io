@@ -1,0 +1,156 @@
+<nz-content class="outer-content">
+        <!-- <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate">
+                <nz-tab nzTitle="Employee Info List"> -->
+                    <nz-layout>
+                    <nz-content class="heightFull">
+                            <nz-card>
+                                    <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">                  
+                                    <nz-form-item>
+                                            <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                                                    <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                      <input formControlName="employeeNumber" nz-input placeholder="请输入员工号" 
+                                                      [(ngModel)]="employeeNumber"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpNo($event)"  />
+                                                      </nz-input-group>
+                                                      <ng-template #suffixIcon>
+                                                        <i nz-icon nzType="search"></i>
+                                                      </ng-template>
+                                                      <nz-autocomplete #auto>
+                                                          
+                                                      </nz-autocomplete>
+                                                  </nz-form-control>
+                                        </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-control nzErrorTip="Please input your employeeName!">
+                                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                          <input formControlName="employeeName" nz-input placeholder="请输入员工姓名"
+                                                          [(ngModel)]="employeeName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpName($event)" />
+                                                          </nz-input-group>
+                                                      </nz-form-control>
+                                            </nz-form-item>
+                                        <nz-form-item>
+                                                <nz-form-control>
+                                                        <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                                     nzShowUploadList="true" [(nzFileList)]="fileList" [nzCustomRequest]="customReq"
+                                                     >
+                                                            <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                                                          </nz-upload>
+                                                        </nz-form-control>
+                                            </nz-form-item>
+                    
+                                            <nz-form-item>
+                                                <nz-form-control> 
+                                                <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="menu"><i nz-icon nzType="download" nzTheme="outline"></i>下载</button>
+                                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                        <ul nz-menu>
+                                                          <li nz-menu-item (click)="downloadEmpInfoDetailsList()">Download Employee Info</li>
+                                                          <li nz-menu-item (click)="downloadExcelEmpDetailsTemplate()">Download Employee Details Template</li>
+                                                        </ul>
+                                                      </nz-dropdown-menu>
+                                                <!-- <button nz-button nzType="primary" [nzSize]="size" (click)="downloadExcelEmployeeTemplate()"><i nz-icon nzType="download"></i>Download Template</button>           -->
+                                                        </nz-form-control>
+                                            </nz-form-item>
+                    
+                                    </form>
+                                    </nz-card>
+                                    <div nz-row nzType="flex" nzJustify="start">
+                                    <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                                    <nz-card class="bCard">
+                                    <nz-table #ajaxTable nzShowQuickJumper [nzData]="employeeDetailsList" class="table-list"
+                                    [nzFrontPagination]="true" [nzTotal]="total"
+                                    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize">
+                                    <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                            <tr>
+                                                    <th nzShowSort nzSortKey="id">
+                                                      ID
+                                                    </th>
+                                                    <th nzShowSort nzSortKey="empId"
+                                                    class="white_nowrap">
+                                                    <span>员工号</span></th>
+                                                    <th nzShowSort nzSortKey="empName"
+                                                        class="white_nowrap">
+                                                        <span>员工姓名</span></th>
+                                                    <th nzShowSort nzSortKey="empMobile"
+                                                    class="white_nowrap">
+                                                    手机号码
+                                                    </th>
+                                                    <th nzShowSort nzSortKey="empCompanyName"
+                                                        class="white_nowrap">
+                                                        <span>所属公司</span></th>
+                                                    <th nzShowSort nzSortKey="empDeptName"
+                                                        class="white_nowrap">
+                                                        <span>部门</span></th>
+                                                        
+                                                    <th nzShowSort nzSortKey="empLeaderName"
+                                                        class="white_nowrap">
+                                                        <span>主管评分人</span></th>
+                                                        <th nzShowSort nzSortKey="updateTime">
+                                                                        CreateTime
+                                                        </th>
+                                                        <th nzShowSort nzSortKey="updateTime">
+                                                                        UpdateTime
+                                                        </th>
+                                                        <th>Status</th>
+                                                        <th>
+                                                         Action
+                                                        </th>
+                                                </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                                    <td>
+                                                            {{item.id}}
+                                                    </td>
+                                                <td>
+                                                <a href="javascript:void(0)" class="class-href" (click)="viewEmpDetails(item.id,item.empId)">
+                                                                        {{item.empId}}
+                                                </a>
+                                                </td>
+                                                <td>
+                                                    {{item.empName}}
+                                                </td>
+                                                <td>
+                                                        {{item.empMobile}}
+                                                </td>
+                                                <td>
+                                                    {{item.empCompanyName}}
+                                                </td>
+                                                <td>
+                                                    {{item.empDeptName}}
+                                                </td>
+                                                <td>
+                                                    {{item.empLeaderName}}
+                                                </td>
+                                                <td>
+                                                                {{item.createTime}}
+                                                </td>
+                                                <td>
+                                                        {{item.updateTime}}
+                                                </td>
+                                                <td *ngIf="item.status==1" class="active">Active</td>
+                                                <td *ngIf="item.status==0" class="in-active">In-Active</td>
+                                                <td *ngIf="item.status==1">
+                                                 <a  (click)="viewEmpInfo(item.id,item.empName,item.empMobile,item.empCompanyName,item.empDeptName,item.empLeaderName)">View</a>
+                                                 <nz-divider nzType="vertical" *ngIf="authority=='ADMIN'"></nz-divider>
+                                                 <a *ngIf="authority==='ADMIN'" (click)="updateEmpInfo(item.id,item.empName,item.empMobile,item.empCompanyName,item.empDeptName,item.empLeaderName)">Edit</a>
+                                                 <nz-divider nzType="vertical" *ngIf="authority=='ADMIN'"></nz-divider>
+                                                 <a *ngIf="authority==='ADMIN'"  (click)="blockEmpInfo(item.empId)">Block</a>
+                                                </td>
+                                                <td *ngIf="item.status==0">
+                                                <a (click)="unBlockEmpInfo(item.empId)">Un-Block</a>
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                    </nz-table>
+                            </nz-card>
+                    </div>
+                    </div>
+                    </nz-content>
+                    </nz-layout>
+                <!-- </nz-tab>
+                <nz-tab nzTitle="Employee Info Application">
+                        Content of Tab Pane 2
+                </nz-tab>
+        </nz-tabset> -->
+        <!-- <nz-tab *ngFor="let tab of tabs" [nzTitle]="'Tab' + tab"> Content of Tab Pane {{ tab }} </nz-tab> -->
+</nz-content>

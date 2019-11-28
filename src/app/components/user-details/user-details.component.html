@@ -1,0 +1,264 @@
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+        <nz-tab nzTitle="用户列表">
+                <!-- <nz-card>
+                <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                <nz-form-item>
+                                <nz-form-control>
+                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                <input formControlName="userName" nz-input placeholder="Search User Name..."
+                                                [(ngModel)]="userName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchUserName($event)" />
+                                                </nz-input-group>
+                                                <ng-template #suffixIcon>
+                                                                <i nz-icon nzType="search"></i>
+                                              </ng-template>
+                                                <nz-autocomplete #auto>
+                                                         
+                                               </nz-autocomplete>
+                                        </nz-form-control>
+                </nz-form-item>
+                </form>
+                </nz-card> -->
+                    <!-- List -->
+                    <div nz-row nzType="flex" nzJustify="start">
+                <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                <nz-card>
+                                <nz-table #ajaxTable nzShowQuickJumper [nzData]="listUser" class="table-list"
+                                [nzFrontPagination]="true" [nzTotal]="total"
+                                [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                (nzPageIndexChange)="getUserDetailsList()"
+                                (nzPageSizeChange)="getUserDetailsList()">
+                                <thead (nzSortChange)="sort($event)" nzSingleSort>
+                                <tr>
+                                <th nzShowSort nzSortKey="userNo"
+                                class="white_nowrap">
+                                <span>User No</span></th>
+                                <th nzShowSort nzSortKey="userName"
+                                class="white_nowrap">
+                                <span>User Name</span></th>
+                                <th nzShowSort nzSortKey="companyId"
+                                class="white_nowrap">
+                                <span>company Name</span></th>
+                                <th nzShowSort nzSortKey="departmentId"
+                                class="white_nowrap">
+                                <span>Dept Name</span></th>
+                                <th nzShowSort nzSortKey="loginName"
+                                class="white_nowrap">
+                                <span>Login Name</span></th>
+                                <th nzShowSort nzSortKey="userMobile"
+                                class="white_nowrap">
+                                <span>Mobile</span></th>
+                                <th nzShowSort nzSortKey="userEmail"
+                                class="white_nowrap">
+                                <span>Email</span></th>
+                                <th nzShowSort nzSortKey="active"
+                                class="white_nowrap">
+                                <span>Active</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                <td>
+                                                {{item.userNo}}
+                                </td>
+                                <td>
+                                                {{item.userName}}
+                                </td>
+                                <td>
+                                                {{item.companyId}}
+                                </td>
+                                <td>
+                                                {{item.departmentId}}
+                                </td>
+                                <td>
+                                                {{item.loginName}}
+                                </td>
+                                <td>
+                                                {{item.userMobile}}
+                                </td>
+                                <td>
+                                                {{item.userEmail}}
+                                </td> 
+                                <td> 
+                                                {{item.active}}
+                                </td> 
+                                </tr>
+                                </tbody>
+                                
+                                </nz-table>
+                </nz-card>
+                </div>
+               </div>
+
+              </nz-tab>
+              <nz-tab nzTitle="用户添加">
+                    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                                <nz-form-item>
+                                                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userCompanyName">Company Name</nz-form-label>
+                                                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Company">
+                                                <nz-select  class="inputBaseAmount"
+                                                                    nzShowSearch
+                                                                    nzAllowClear
+                                                                    nzPlaceHolder="Select CompanyName"
+                                                                    formControlName="userCompanyName"
+                                                                    [(ngModel)]="userCompanyName"
+                                                                    >
+                                                                    <nz-option nzLabel="宝智
+                                                                    " nzValue="0
+                                                                    "></nz-option>
+                                                                    <nz-option nzLabel="元教
+                                                                    " nzValue="1
+                                                                    "></nz-option>
+                                                                    <nz-option nzLabel="教汇
+                                                                    " nzValue="2
+                                                                    "></nz-option>
+                                                                    <nz-option nzLabel="随影
+                                                                    " nzValue="3
+                                                                    "></nz-option>
+                                                                    <nz-option nzLabel="丸家
+                                                                    " nzValue="4
+                                                                    ">|</nz-option>
+                                                                    </nz-select>
+                                                                </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userDeptName">Department Name</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Department">
+                                        <nz-select  class="inputBaseAmount"
+                                                            nzShowSearch
+                                                            nzAllowClear
+                                                            nzPlaceHolder="Select Department"
+                                                            formControlName="userDeptName"
+                                                            [(ngModel)]="userDeptName"
+                                                            
+                                                            >
+                                                            <nz-option nzLabel="项目技术部
+
+                                                            " nzValue="0
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="人事部
+
+
+                                                            " nzValue="1
+
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="市场部
+
+                                                            " nzValue="2
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="运营保障部
+
+                                                            " nzValue="3
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="运营保障部
+
+                                                            " nzValue="4
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="总经办
+
+                                                            " nzValue="5
+
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="总经办
+
+                                                            " nzValue="6
+
+                                                            "></nz-option>
+                                                            </nz-select>
+                                                        </nz-form-control>
+                           </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userNo">User ID</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter ID!">
+                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="userNo"  [(ngModel)]="userNo"   placeholder="User No">
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userName">User Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Name!">
+                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="userName"  [(ngModel)]="userName"   placeholder="User Name">
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userLoginName">Login Name</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Login Name!">
+                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="userLoginName"  [(ngModel)]="userLoginName"   placeholder="User Login">
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userPassword">Login Password</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Password!">
+                                            <input nz-input type="password" id="password"  nzAllowClear class="inputBaseAmount" formControlName="userPassword"  [(ngModel)]="userPassword"   placeholder="User Password" (ngModelChange)="updateConfirmValidator()">
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userName">Confirm Password</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+                                            <input nz-input type="password" id="checkPassword"  nzAllowClear class="inputBaseAmount" formControlName="checkPassword"  [(ngModel)]="checkPassword"   placeholder="Confirm Password">
+                                            <ng-template #errorTpl let-control>
+                                                    <ng-container *ngIf="control.hasError('required')">
+                                                      Please confirm your password!
+                                                    </ng-container>
+                                                    <ng-container *ngIf="control.hasError('confirm')">
+                                                      Two passwords that you enter is inconsistent!
+                                                    </ng-container>
+                                                  </ng-template>
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userEmail">Email</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Enter Email!">
+                                            <input nz-input nzAllowClear class="inputBaseAmount" formControlName="userEmail"  [(ngModel)]="userEmail"   placeholder="Email">
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userMobile">Mobile</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24"     [nzValidateStatus]="validateForm.controls['userMobile']" nzErrorTip="Please input your phone number!">
+                                            <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                                                    <ng-template #addOnBeforeTemplate>
+                                                      <nz-select formControlName="phoneNumberPrefix" [(ngModel)]="phoneNumberPrefix" class="phone-select">
+                                                        <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+                                                        <nz-option nzLabel="+87" nzValue="+87"></nz-option>
+                                                      </nz-select>
+                                                    </ng-template>
+                                            <input nz-input id="userMobile" nzAllowClear class="inputBaseMobile" formControlName="userMobile"  [(ngModel)]="userMobile"   placeholder="Mobile">
+                                            </nz-input-group>
+                                    </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="active">Active to Login</nz-form-label>
+                                        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Choose Company">
+                                        <nz-select  class="inputBaseAmount"
+                                                            nzShowSearch
+                                                            nzAllowClear
+                                                            formControlName="active"
+                                                            [(ngModel)]="active"
+                                                            >
+                                                            <nz-option nzLabel="Active
+                                                            " nzValue="1
+                                                            "></nz-option>
+                                                            <nz-option nzLabel="InActive
+                                                            " nzValue="0
+                                                            "></nz-option>
+                                                            </nz-select>
+                                                        </nz-form-control>
+                                      </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSpan]="6">Remarks</nz-form-label>
+                                    <nz-form-control [nzSpan]="12">
+                                      <textarea formControlName="userRemarks" [(ngModel)]="userRemarks" class="inputBaseAmount" nz-input rows="2" placeholder="write any thing"></textarea>
+                                    </nz-form-control>
+                                  </nz-form-item>
+                                  <nz-form-item>
+                                    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+                                      <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+                                      <button nz-button (click)="resetForm($event)">Reset</button>
+                                    </nz-form-control>
+                                  </nz-form-item>
+                        </form>
+              </nz-tab>
+</nz-tabset>

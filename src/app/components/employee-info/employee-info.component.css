@@ -1,0 +1,37 @@
+:host::ng-deep.ant-table-tbody >tr:nth-child(odd){
+    background-color:#f9f9f9 !important;
+    
+  }
+  :host::ng-deep.ant-table-tbody >tr:nth-child(even){
+    background-color: #ffffff;
+    
+  }
+  .table-list{
+    position: relative;  
+    height: 100%;
+      background-color: #ffffff;
+  }
+    .bCard{
+      /* min-height:680px; */
+      margin: 0px 0px; 
+      background: #ffffff;
+      /* border-bottom:1px solid #4b4b4b; */
+    }
+    .white_nowrap{
+      white-space: nowrap;
+    }
+    .class-href{
+      color:#2fa4e7;
+      text-decoration: none;
+    }
+    .ant-input-affix-wrapper .ant-input{
+      border-radius: 5px;
+    }
+    .active{
+      color: green;
+      font-size: 12px;
+    }
+    .in-active{
+      color: red;
+      font-size: 12px;
+    }

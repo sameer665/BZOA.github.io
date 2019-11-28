@@ -1,0 +1,27 @@
+:host ::ng-deep .ant-layout-sider {
+  background: #fff;
+  color: black;
+  padding: 100px 0px;
+}
+
+:host ::ng-deep .ant-menu-dark,
+.ant-menu-dark .ant-menu-sub {
+  background: #fff;
+  color: black
+}
+
+.layout-nz {
+  /* padding: 24px 24px 24px; */
+  padding-left: 4px;
+  padding-top: 4px;
+  padding-right: 24px;
+  min-height: calc(100vh - 64px);
+  margin-top: 64px;
+  margin-left: 0px;
+}
+.ant-layout-footer {
+  padding: 24px 50px;
+  color: rgba(0,0,0,.65);
+  font-size: 14px;
+  background: #f1f2f4;
+}

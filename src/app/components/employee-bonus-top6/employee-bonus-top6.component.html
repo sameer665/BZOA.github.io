@@ -1,0 +1,173 @@
+
+    <nz-layout>
+        <nz-content class="heightFull">
+                <!-- <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate"> -->
+                        <!-- <nz-tab nzTitle="Bonus List"> -->
+                                <nz-card>
+                                        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                                        <nz-form-item>
+                                                <nz-form-control>
+                                                        <nz-month-picker [nzDisabledDate]="disabledDate" nzPlaceHolder="请选择月份"
+                                                         formControlName="employeeBonusDate" [(ngModel)]="employeeBonusDate" (ngModelChange)="onSearchEmpByMonths($event)"></nz-month-picker>
+                                                        </nz-form-control>
+                                            </nz-form-item>
+                                            <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                                                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                              <input formControlName="employeeNumber" nz-input placeholder="请输入员工号..." style="border-radius: 5px;" 
+                                                              [(ngModel)]="employeeNumber"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpNo($event)"  />
+                                                              </nz-input-group>
+                                                          </nz-form-control>
+                                                </nz-form-item>
+                                                <nz-form-item>
+                                                    <nz-form-control nzErrorTip="Please input your employeeName!">
+                                                            <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                                                <input formControlName="employeeName" nz-input placeholder="请输入员工姓名..." style="border-radius: 5px;"
+                                                                [(ngModel)]="employeeName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchEmpName($event)" />
+                                                                </nz-input-group>
+                                                                <ng-template #suffixIcon>
+                                                                    <i nz-icon nzType="search"></i>
+                                                                  </ng-template>
+                                                                  <nz-autocomplete #auto>
+                                                                  </nz-autocomplete>
+                                                            </nz-form-control>
+                                                </nz-form-item>
+                                                <nz-form-item>
+                                                                <nz-select
+                                                                    style="width: 200px;top:7px;"
+                                                                    nzShowSearch
+                                                                    nzAllowClear
+                                                                    nzPlaceHolder="Select a SuperVisor Name"
+                                                                    formControlName="superVisorName"
+                                                                    [(ngModel)]="superVisorName"
+                                                                    (ngModelChange)="selectSuperVisorName($event)">
+                                                                    <nz-option nzLabel="刘浩" nzValue="刘浩"></nz-option>
+                                                                    <nz-option nzLabel="沈怡妮" nzValue="沈怡妮"></nz-option>
+                                                                    <nz-option nzLabel="孙静" nzValue="孙静"></nz-option>
+                                                                    <nz-option nzLabel="唐文杰" nzValue="唐文杰"></nz-option>
+                                                                    <nz-option nzLabel="张要可" nzValue="张要可"></nz-option>
+                                                                    <nz-option nzLabel="周诗旖" nzValue="周诗旖"></nz-option>
+                                                                    <nz-option nzLabel="none" nzValue="none"></nz-option>
+                                                                    </nz-select>
+                                                                
+                                                </nz-form-item>
+                                                <nz-form-item>
+                                                        <nz-form-control>
+                                                                <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                                             nzShowUploadList="true"
+                                                             >
+                                                                    <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                                                                  </nz-upload>
+                                                                </nz-form-control>
+                                                    </nz-form-item>
+                                                        <!-- <nz-form-item>
+                                                                <nz-form-control> 
+                                                                <button nz-button nzType="primary"  nz-dropdown [nzDropdownMenu]="menu" ><i nz-icon nzType="download" nzTheme="outline"></i>下载</button>
+                                                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                                        <ul nz-menu>
+                                                                          <li nz-menu-item (click)="downloadEmpBonusList()">Download Bonus List</li>
+                                                                          <li nz-menu-item (click)="downloadExcelEmpBonusTemplate()">Download Bonus  Template</li>
+                                                                        </ul>
+                                                                      </nz-dropdown-menu>
+                                                                        </nz-form-control>
+                                                            </nz-form-item> -->
+                                        </form>
+                                        </nz-card>
+                                        <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                                                <nz-card class="bCard">
+                                                        <nz-table #ajaxTable  nzShowQuickJumper
+                                                        [nzFrontPagination]="true"
+                                                        [nzFrontPagination]="true" [nzTotal]="total"
+                                                        [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                                         [nzData]="empBonusRankingList"
+                                                         >
+                                                         <thead  (nzSortChange)="sort($event)" nzSingleSort>
+                                                                <tr>
+                                                                         <th nzShowSort nzSortKey="empId"
+                                                                        class="white_nowrap">
+                                                                        <span>雇员ID</span></th> 
+                                                                        <th nzShowSort nzSortKey="empName"
+                                                                            class="white_nowrap">
+                                                                            <span>员工姓名</span></th>
+                                                                        <th nzShowSort nzSortKey="empDept"
+                                                                            class="white_nowrap">
+                                                                            <span>部门</span></th>
+                                                                        <th nzShowSort nzSortKey="empBonusMonth"
+                                                                        class="white_nowrap">
+                                                                        <span>月份</span></th>
+                                                                        <th nzShowSort nzSortKey="empSupervisor"
+                                                                            class="white_nowrap">
+                                                                            <span>主管姓名</span></th>
+                                                                            <th nzShowSort nzSortKey="empDaysMonth"
+                                                                            class="white_nowrap">
+                                                                            <span>本月天数</span></th> 
+                                                                            <th nzShowSort nzSortKey="empTop1"
+                                                                            class="white_nowrap">
+                                                                            <span>Top-1</span></th>
+                                                                        <th nzShowSort nzSortKey="empTop2"
+                                                                            class="white_nowrap">
+                                                                            <span>Top-2</span></th>
+                                                                        <th nzShowSort nzSortKey="empTop3"
+                                                                            class="white_nowrap">
+                                                                            <span>Top-3</span></th>
+                                                                        <th nzShowSort nzSortKey="empTop4" class="white_nowrap">
+                                                                                <span>Top-4</span></th>
+                                                                        <th nzShowSort nzSortKey="empTop5" class="white_nowrap">
+                                                                            <span>Top-5</span></th>
+                                                                        <th nzShowSort nzSortKey="empTop6" class="white_nowrap">
+                                                                                <span>Top-6</span></th>
+                                                                        <th nzShowSort nzSortKey="empBonusScore"
+                                                                            class="white_nowrap">
+                                                                            <span>本月主管总评分
+                                                                                    </span></th> 
+                                                                    </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                                             <td>
+                                                                {{item.empId}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empName}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empDept}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empBonusMonth | date:'yyyy-MM'}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empSupervisor}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empDaysMonth}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empTop1}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empTop2}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empTop3}}
+                                                            </td>
+                                                            <td>
+                                                               {{item.empTop4}}
+                                                            </td>
+                                                            <td>
+                                                                {{item.empTop5}}
+                                                             </td>
+                                                             <td>
+                                                                {{item.empTop6}}
+                                                             </td>
+                                                            <td>
+                                                                {{item.empBonusScore}}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                         </nz-table>
+                                                </nz-card>
+                                        </div>
+        </nz-content>
+        </nz-layout>
+    

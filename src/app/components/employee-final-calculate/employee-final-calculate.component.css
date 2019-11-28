@@ -1,0 +1,54 @@
+:host::ng-deep.ant-table-tbody >tr:nth-child(odd){
+  background-color:#f9f9f9 !important;
+  
+}
+:host::ng-deep.ant-table-tbody >tr:nth-child(even){
+  background-color: #ffffff;
+}
+.basic_two{
+    float: left;
+    width: 33%;
+    padding-left: 30px;
+    padding-top: 0px;
+    margin: 0px 0px;
+}
+.inputBase{
+    line-height: 44px;
+    width: 200px;
+    margin-left: 0px;
+}
+.inputBaseVal{
+    width: 200px;
+    margin-left: 0px;
+  }
+  .inputBaseRatio{
+    line-height: 44px;
+    width: 150px;
+    margin-left: 0px;
+  }
+  .register-area{
+      margin-top: 2px;
+  }
+  .inputBaseAmount{
+    width: 200px;
+    margin-left: 5px;
+  }
+  .input-margin{
+      margin: 4px 0px;
+  }
+  :host::ng-deep.ant-calendar-picker-input.ant-input{
+    width: 200px;
+    top: 0px;
+    margin-left: 0px;
+    /* padding: 0px 10px; */
+  }
+  nz-input-number {
+    margin-right: 8px;
+  }
+  :host::ng-deep .ant-input-number-input {
+    position: relative;
+    top: -5px;
+}
+.align-plan{
+    margin-right: 30px;
+}

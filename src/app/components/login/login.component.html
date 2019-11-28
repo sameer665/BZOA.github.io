@@ -1,0 +1,42 @@
+<div class="main-wrapper">
+    <div class="layout-passport">
+        <div class="layou-logo">
+          </div>
+          <h2 class="account-slogon-main">BZ HRMS</h2>
+          <div class="accout-slogon">
+              <p>OA(Office Automation)</p>
+          </div>
+          <div class="account-login">
+              <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your userName!">
+                      <nz-input-group nzPrefixIcon="user">
+                        <input type="text" nz-input formControlName="userName" [(ngModel)]="userName"  placeholder="请输入用户名" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your Password!">
+                      <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input formControlName="password" [(ngModel)]="password"  placeholder="请输入帐户密码" />
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  <nz-form-item>
+                    <nz-form-control>
+                      <label nz-checkbox formControlName="remember">
+                        <span>记住密码</span>
+                      </label>
+                      <!-- <a class="login-form-forgot" class="login-form-forgot">Forgot password</a> -->
+                      <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="loading">{{loadingdesc}}</button>
+                      <div *ngIf="isLoginFailed==true" class="alert alert-danger">
+                        Login failed: {{errorMessage}}
+                      </div>
+                      <!-- Or
+                      <a>register now!</a> -->
+                    </nz-form-control>
+                  </nz-form-item>
+                </form>
+          </div>
+      </div>
+</div>

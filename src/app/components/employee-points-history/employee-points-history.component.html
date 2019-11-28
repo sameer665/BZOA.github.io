@@ -1,0 +1,226 @@
+<nz-layout>
+    <nz-content class="heightFull">
+            <nz-card>
+                    <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+                    <nz-form-item>
+                            <nz-form-control>
+                                    <nz-month-picker [nzDisabledDate]="disabledDate" nzPlaceHolder="请选择月份"
+                                     formControlName="employeePointsDate" [(ngModel)]="employeePointsDate" (ngModelChange)="onSearchEmpHistoryByMonths($event)"></nz-month-picker>
+                                    </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-control nzErrorTip="Please input your employeeNumber!">
+                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                          <input formControlName="employeeId" nz-input placeholder="请输入员工号" style="border-radius: 5px;" 
+                                          [(ngModel)]="employeeId"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchByEmpNo($event)"  />
+                                          </nz-input-group>
+                                      </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control nzErrorTip="Please input your employeeName!">
+                                        <nz-input-group nzSize="default"  [nzSuffix]="suffixIcon">
+                                            <input formControlName="employeeName" nz-input placeholder="请输入员工姓名" style="border-radius: 5px;"
+                                            [(ngModel)]="employeeName"   [nzAutocomplete]="auto"    (ngModelChange)="onSearchByEmpName($event)" />
+                                            </nz-input-group>
+                                            <ng-template #suffixIcon>
+                                                <i nz-icon nzType="search"></i>
+                                              </ng-template>
+                                              <nz-autocomplete #auto>
+                                                  
+                                              </nz-autocomplete>
+                                        </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-control>
+                                            <nz-upload nzAction="importEmployeeDetailsUrl" nzMultiple="false" nzAccept="'.*'"   
+                                         nzShowUploadList="true" [(nzFileList)]="fileList" [nzCustomRequest]="customReq"
+                                         >
+                                                <button nz-button><i nz-icon nzType="upload"></i><span>上传</span></button>
+                                              </nz-upload>
+                                            </nz-form-control>
+                                </nz-form-item>
+                    </form>
+                    <!-- --LIST TABLE-->
+                    </nz-card>
+                    <div nz-row nzType="flex" nzJustify="start">
+                    <div nz-col nzSpan="12" nzSm="12" nzMd="12" nzLg="24" nzXl="24" >
+                            <nz-card class="bCard">
+                                    <nz-table #ajaxTable  nzShowQuickJumper
+                                    [nzFrontPagination]="true"
+                                    [nzFrontPagination]="true" [nzTotal]="total"
+                                    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                                     [nzData]="empPointsHistoryList">
+                                     <thead  (nzSortChange)="sort($event)" nzSingleSort>
+                                            <tr>
+                                                     <th nzShowSort nzSortKey="empId"
+                                                    class="white_nowrap">
+                                                    <span>雇员ID</span></th> 
+
+                                                    <th nzShowSort nzSortKey="empName"
+                                                        class="white_nowrap">
+                                                        <span>员工姓名</span></th>
+
+                                                    <th nzShowSort nzSortKey="empDept"
+                                                        class="white_nowrap">
+                                                        <span>部门</span></th>
+
+                                                    <!-- <th nzShowSort nzSortKey="empDate"
+                                                    class="white_nowrap">
+                                                    <span>日期</span></th> -->
+
+                                                        
+                                                        <th nzShowSort nzSortKey="empCompany"
+                                                        class="white_nowrap">
+                                                        <span>单位</span></th>
+
+                                                    <th nzShowSort nzSortKey="empLevelPosition"
+                                                        class="white_nowrap">
+                                                        <span>级别</span></th>
+
+                                                    <th nzShowSort nzSortKey="empType"
+                                                        class="white_nowrap">
+                                                        <span>类别 </span></th>
+
+                                                    <th nzShowSort nzSortKey="empPointsEarn"
+                                                        class="white_nowrap">
+                                                        <span>积分获得金额
+                                                                </span></th> 
+                                                                <th nzShowSort nzSortKey="empPointsDeduct"
+                                                        class="white_nowrap">
+                                                        <span>积分兑换金额
+                                                                </span>
+                                                        </th> 
+                                                                <th nzShowSort nzSortKey="empAccumulatedPoints"
+                                                        class="white_nowrap">
+                                                        <span>积分余额
+                                                                </span></th> 
+
+                                                                
+                                                                <th>
+                                                                    明细
+                                                                </th>
+                                                                
+                                                </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let item of ajaxTable.data;let i=index">
+                                         <td>
+                                            {{item.empId}}
+                                        </td>
+                                        <td>
+                                            {{item.empName}}
+                                        </td>
+                                        <td>
+                                            {{item.empDept}}
+                                        </td>
+                                        <!-- <td>
+                                            {{item.empDate | date:'yyyy-MM-dd'}}
+                                        </td> -->
+                                        <td>
+                                            {{item.empCompany}}
+                                        </td>
+                                        <td>
+                                            {{item.empLevelPosition}}
+                                        </td>
+                                        <td>
+                                            {{item.empType}}
+                                        </td>
+                                        <td>
+                                            {{item.empPointsEarn}}
+                                        </td>
+                                        <td>
+                                            {{item.empPointsDeduct}}
+                                        </td>
+                                        <td>
+                                            {{item.empAccumulatedPoints}}
+                                        </td>
+                                        <td>
+                                                <a  (click)="viewEmpPointsDetails(item.empId)">View</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                     </nz-table>
+                                    </nz-card>
+                                </div>
+                            </div>
+                            <div *ngIf="isVisibleMiddle==true">
+                                     <nz-modal
+                            nzWrapClassName="vertical-center-modal"
+                            [(nzVisible)]="isVisibleMiddle"
+                            nzTitle="Points History Details "
+                            (nzOnCancel)="handleCancelMiddle()">
+                            <nz-table #editRowTable nzBordered    
+                             [nzData]="empPointsHistoryDetailsList"
+                             >
+                             <thead>
+                                    <th nzWidth="10%"
+                                    class="white_nowrap">
+                                    <span>雇员ID</span></th> 
+                                    <th 
+                                                    class="white_nowrap">
+                                                    <span>日期</span></th>
+                                                    
+                                                    <th
+                                                        class="white_nowrap">
+                                                        <span>积分获得金额
+                                                                </span></th> 
+                                                        <th
+                                                        class="white_nowrap">
+                                                        <span>积分兑换金额
+                                                                </span>
+                                                        </th> 
+                                                        <th
+                                                        class="white_nowrap">
+                                                        <span>积分余额
+                                                                </span></th> 
+                                                                <th
+                                                        class="white_nowrap">
+                                                        <span>产品编号
+                                                                </span></th> 
+
+                                                                <th
+                                                        class="white_nowrap">
+                                                        <span>单价
+                                                                </span></th> 
+
+                                                        <th
+                                                        class="white_nowrap">
+                                                        <span>数量
+                                                                </span></th> 
+                            </thead>
+                            <tbody>
+                                    <tr *ngFor="let item of editRowTable.data;let i=index">
+                                            <td>
+                                                    {{item.empId}}
+                                                </td>
+                                                <td>
+                                                    {{item.empDate | date:'yyyy-MM-dd'}}
+                                                </td>
+                                                <td>
+                                                    {{item.empPointsEarn}}
+                                                </td>
+                                                <td>
+                                                    {{item.empPointsDeduct}}
+                                                </td>
+                                                <td>
+                                                    {{item.empAccumulatedPoints}}
+                                                </td>
+                                                <td>
+                                                    {{item.empGiftId}}
+                                                </td>
+                                                <td>
+                                                        {{item.empGiftUnitPrice}}
+                                                    </td>
+                                                    <td>
+                                                            {{item.empGiftQuantity}}
+                                                        </td>
+                                        </tr>
+                            </tbody>
+
+                            </nz-table>
+
+                            </nz-modal>
+                        </div>
+                    
+        </nz-content>
+        </nz-layout>
