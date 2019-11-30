@@ -8,8 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy:gh": "ng build --prod --base-href='https://sameer665.github.io/bzoa.github.io/' && ngh",
-     "heroku-postbuild": "ng build --prod"
+    "deploy:gh": "ng build --prod --base-href='https://sameer665.github.io/bzoa.github.io/' && ngh"
   },
   "private": true,
   "dependencies": {
